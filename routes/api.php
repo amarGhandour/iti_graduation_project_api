@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\CartController;
 use App\Http\Controllers\Api\V1\ProductsController;
+use App\Http\Controllers\Api\V1\SaveForLaterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,22 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+// shopping cart
+Route::get('/cart', [CartController::class, 'index']);
+Route::post('/cart', [CartController::class, 'store']);
+Route::delete('/cart/{rowId}', [CartController::class, 'destroy']);
+Route::post('/cart/{rowId}/switchToSaveForLater', [CartController::class, 'switchToSaveForLater']);
+
+// save for later
+Route::get('/saveForLater', [SaveForLaterController::class, 'index']);
+Route::post('/saveForLater/{rowId}/switchToCart', [SaveForLaterController::class, 'switchToCart']);
+Route::delete('/saveForLater/{rowId}', [SaveForLaterController::class, 'destroy']);
+
+
+Route::post('/empty', function () {
+    \Gloudemans\Shoppingcart\Facades\Cart::instance('shopping')->destroy();
+});
+
 Route::prefix('admin')->group(function () {
 
     Route::post('/login', [AuthController::class, 'login']);
@@ -40,8 +57,6 @@ Route::prefix('admin')->group(function () {
         Route::patch('/user/info', [AuthController::class, 'updateInfo']);
         Route::patch('/user/password', [AuthController::class, 'updatePassword']);
         Route::post('/logout', [AuthController::class, 'logout']);
-
-
     });
 
 });

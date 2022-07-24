@@ -25,10 +25,6 @@ class ProductsController extends Controller
     public function show(Product $product)
     {
 
-        if (!$product) {
-            return $this->response(Response::HTTP_NOT_FOUND, false, ['404' => 'The specified product not found']);
-        }
-
         return $this->response(Response::HTTP_OK, true, null, ProductResource::make($product));
 
     }
