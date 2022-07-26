@@ -41,6 +41,18 @@ class CartController extends Controller
         return $this->response(201, true, null, $newItem, 'New Item added to your Cart.');
     }
 
+    public function update(Request $request, $rowId)
+    {
+
+        $attributes = $request->validate([
+            'quantity' => ['required', 'numeric', 'between:1,5']
+        ]);
+
+        Cart::instance('shopping')->update($rowId, $attributes['quantity']);
+
+        return $this->response(200, true, null, null, 'Item Quantity has been successfully updated.');
+    }
+
     public function destroy($rowId)
     {
         try {

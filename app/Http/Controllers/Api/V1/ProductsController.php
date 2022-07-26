@@ -17,9 +17,17 @@ class ProductsController extends Controller
     public function index(Request $request)
     {
 
-        $categories = $request->input('all') == 1 ? Product::all() : Product::paginate();
+        $products = Product::with('categories');
 
-        return ProductCollection::make($categories);
+        if ($request->has('category')) {
+            $products->whereHas('categories', function ($query) use ($request) {
+                $query->where('slug', $request->input('category'));
+            });
+        }
+
+        $products = $request->input('all') == 1 ? $products->get() : $products->paginate();
+
+        return ProductCollection::make($products);
     }
 
     public function show(Product $product)

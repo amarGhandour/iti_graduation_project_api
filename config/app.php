@@ -199,6 +199,7 @@ return [
         // Shopping Cart Service Provider
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
 
+        Cartalyst\Stripe\Laravel\StripeServiceProvider::class,
     ],
 
     /*
