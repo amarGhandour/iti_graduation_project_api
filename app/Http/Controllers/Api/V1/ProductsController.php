@@ -14,6 +14,8 @@ class ProductsController extends Controller
 {
     use ApiResponse;
 
+    const PAGINATE_PER_PAGE = 10;
+
     public function index(Request $request)
     {
 
@@ -25,7 +27,7 @@ class ProductsController extends Controller
             });
         }
 
-        $products = $request->input('all') == 1 ? $products->get() : $products->paginate();
+        $products = $request->input('all') == 1 ? $products->get() : $products->paginate(self::PAGINATE_PER_PAGE);
 
         return ProductCollection::make($products);
     }

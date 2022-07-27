@@ -19,7 +19,8 @@ class ProductResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'description' => $this->description,
-            'price' => number_format($this->price, 2),
+            'price' => $this->price,
+            'quantity' => $this->quantity,
             'categories' => $this->whenLoaded('categories')->implode('name', ','),
         ];
     }

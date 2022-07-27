@@ -12,15 +12,12 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('coupons', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('slug')->unique();
-            $table->integer('price');
-            $table->text('description');
-            $table->string('image')->nullable();
-            $table->boolean('featured')->default(false);
-            $table->unsignedInteger('quantity')->default(10);
+            $table->string('code')->unique();
+            $table->string('type');
+            $table->integer('value')->nullable();
+            $table->integer('percent_off')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('coupons');
     }
 };

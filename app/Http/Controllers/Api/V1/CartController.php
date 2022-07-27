@@ -21,7 +21,15 @@ class CartController extends Controller
 
         $items = Cart::instance('shopping')->content();
 
-        return $this->response(200, true, null, $items);
+        $cart = collect([
+            'items' => $items,
+            'discount' => getNumbers()->get('discount'),
+            'newSubtotal' => getNumbers()->get('newSubtotal'),
+            'newTax' => getNumbers()->get('newTax'),
+            'newTotal' => getNumbers()->get('newTotal'),
+        ]);
+
+        return $this->response(200, true, null, $cart);
     }
 
     public function store(Request $request)

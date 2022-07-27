@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Coupon;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -33,5 +34,18 @@ class DatabaseSeeder extends Seeder
         Product::factory()->count(50)->create()->each(function ($product) use ($categories) {
             $product->categories()->attach($categories->random(2));
         });
+
+        Coupon::insert([[
+            'code' => 'ABC123',
+            'type' => 'fixed',
+            'value' => 3000
+        ]]);
+
+        Coupon::insert([
+            'code' => 'DEF567',
+            'type' => 'percent',
+            'percent_off' => 15
+        ]);
+
     }
 }
