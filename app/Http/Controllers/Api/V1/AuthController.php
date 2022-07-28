@@ -31,7 +31,7 @@ class AuthController extends Controller
 
         if (!\Auth::attempt($request->only(['email', 'password']))) {
 
-            return $this->response(Response::HTTP_UNAUTHORIZED, false, ['invalid credentials']);
+            return $this->response(Response::HTTP_UNAUTHORIZED, false, ['invalid credentials'], null, 'failed login');
         }
 
         $user = \Auth::user();
@@ -47,6 +47,8 @@ class AuthController extends Controller
     public function logout()
     {
         $cookie = Cookie::forget('jwt');
+
+        auth()->user()->tokens()->delete();
 
         return response()->json(['data' => [], 'errors' => [], 'success' => true])->withCookie($cookie);
     }
