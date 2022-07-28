@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'admin',
             'email' => 'admin@admin.com',
-            'password' => Hash::make('password')
+            'password' => Hash::make('password'),
+            'is_admin' => 1
         ]);
 
         $categories = Category::factory()->count(5)->create();
