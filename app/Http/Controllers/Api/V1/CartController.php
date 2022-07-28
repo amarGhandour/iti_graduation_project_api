@@ -43,7 +43,9 @@ class CartController extends Controller
             return $this->response(200, true, null, null, 'Item is already in your cart!');
         }
 
-        $newItem = Cart::instance('shopping')->add($request->id, $request->name, 1, $request->price)
+        $product = Product::findOrFail($request->id);
+
+        $newItem = Cart::instance('shopping')->add($product->id, $product->name, 1, $product->price)
             ->associate(Product::class);
 
         return $this->response(201, true, null, $newItem, 'New Item added to your Cart.');

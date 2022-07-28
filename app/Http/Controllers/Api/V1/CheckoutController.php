@@ -3,17 +3,18 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CheckoutRequest;
 use App\Http\Traits\ApiResponse;
+use App\Models\Order;
 use Cartalyst\Stripe\Exception\CardErrorException;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
     use ApiResponse;
 
-    public function store(Request $request)
+    public function store(CheckoutRequest $request)
     {
         if ($this->productsAreNoLongerAvailable()) {
             return $this->response(404, false, null, null,
@@ -39,7 +40,9 @@ class CheckoutController extends Controller
                 ],
             ]);
 
-            // Todo insert orders to database, send order email to customer email
+            // Todo  send order email to customer email
+
+            $this->addToOrdersTables($request, null);
 
             $this->decreaseProductsQuantities();
 
@@ -49,6 +52,7 @@ class CheckoutController extends Controller
             return $this->response(201, true, null, null, 'Thank you! Your Payment has been successfully Accepted.');
 
         } catch (CardErrorException $e) {
+            $this->addToOrdersTables($request, $e->getMessage());
             return $this->response($e->getErrorCode(), false, ['error' => $e->getMessage()], null, $e->getMessage());
         }
     }
@@ -70,5 +74,38 @@ class CheckoutController extends Controller
                 'quantity' => $product->quantity - $item->qty,
             ]);
         }
+    }
+
+    protected function addToOrdersTables($request, $error)
+    {
+        // Insert into orders table
+        $order = Order::create([
+            'user_id' => auth()->user() ? auth()->user()->id : null,
+            'billing_email' => $request->email,
+            'billing_name' => $request->name,
+            'billing_address' => $request->address,
+            'billing_city' => $request->city,
+            'billing_province' => $request->province,
+            'billing_postalcode' => $request->postalCode,
+            'billing_phone' => $request->phone,
+            'billing_name_on_card' => $request->nameOnCard,
+            'billing_discount' => getNumbers()->get('discount'),
+            'billing_discount_code' => getNumbers()->get('code'),
+            'billing_subtotal' => getNumbers()->get('newSubtotal'),
+            'billing_tax' => getNumbers()->get('newTax'),
+            'billing_total' => getNumbers()->get('newTotal'),
+            'error' => $error,
+        ]);
+
+        // Insert into order_product table
+        foreach (Cart::content() as $item) {
+            $order->products()->attach($item->model, [
+                'quantity' => $item->qty,
+                'price' => $item->model->price,
+                'subtotal' => $item->subtotal()
+            ]);
+        }
+
+        return $order;
     }
 }
