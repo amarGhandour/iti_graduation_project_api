@@ -200,6 +200,9 @@ return [
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
 
         Cartalyst\Stripe\Laravel\StripeServiceProvider::class,
+
+        // Spatie Service Provider
+        Spatie\Permission\PermissionServiceProvider::class,
     ],
 
     /*
