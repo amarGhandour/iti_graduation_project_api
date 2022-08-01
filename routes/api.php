@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AdminCategoriesController;
 use App\Http\Controllers\Api\V1\AdminProductsController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CartController;
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
 // Guest
 
@@ -72,9 +74,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // admin
 Route::prefix('admin')->group(function () {
-
-    Route::post('/login', [AuthController::class, 'login']);
-
     Route::middleware(['auth:sanctum', 'scope.admin'])->group(function () {
         Route::get('/user', function (Request $request) {
             return $request->user();
@@ -86,6 +85,8 @@ Route::prefix('admin')->group(function () {
 
         // products
         Route::apiResource('/products', AdminProductsController::class)->except('index', 'show');
+        Route::apiResource('/categories', AdminCategoriesController::class)->except('index', 'show');
+
     });
 
 });

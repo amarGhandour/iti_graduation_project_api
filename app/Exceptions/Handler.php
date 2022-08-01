@@ -57,7 +57,7 @@ class Handler extends ExceptionHandler
             return response()->json(['data' => [], 'errors' => ['Unauthenticated'], 'success' => false], 401);
         }
         if ($e instanceof ValidationException) {
-            return response()->json(['data' => [], 'errors' => [$e->errors()], 'success' => false], 401);
+            return response()->json(['data' => [], 'errors' => $e->errors(), 'success' => false], 422);
         }
 
         return parent::render($request, $e);
