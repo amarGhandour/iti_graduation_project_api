@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
-use App\Http\Resources\UserResource;
 use App\Http\Traits\ApiResponse;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -24,12 +23,13 @@ class AuthController extends Controller
                 'password' => \Hash::make($request->input('password')),
             ]);
 
+        $user->assignRole('User');
+
         return $this->response(Response::HTTP_CREATED, true, null, $user);
     }
 
     public function login(LoginRequest $request)
     {
-
         if (!\Auth::attempt($request->only(['email', 'password']))) {
 
             return $this->response(Response::HTTP_UNAUTHORIZED, false, ['invalid credentials'], null, 'failed login');
@@ -37,23 +37,19 @@ class AuthController extends Controller
 
         $user = \Auth::user();
 
-        if ($user->is_admin == 1)
-            $jwt = $user->createToken('access_token', ['admin'])->plainTextToken;
-        else
-            $jwt = $user->createToken('access_token', ['user'])->plainTextToken;
-
+        $jwt = $user->createToken('access_token')->plainTextToken;
 
         $cookie = cookie('access_token', $jwt, 60 * 24);
 
         return response()->json(['data' => [
-            'user' => UserResource::make($user),
+            'user' => $user,
             'accessToken' => $jwt
         ], 'errors' => [], 'success' => true])->withCookie($cookie);
     }
 
     public function logout()
     {
-        $cookie = Cookie::forget('jwt');
+        $cookie = Cookie::forget('access_token');
 
         auth()->user()->tokens()->delete();
 

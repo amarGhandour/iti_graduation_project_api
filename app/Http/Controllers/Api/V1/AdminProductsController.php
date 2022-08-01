@@ -16,6 +16,8 @@ class AdminProductsController extends Controller
 
     public function store(ProductStoreRequest $request)
     {
+        $this->authorize('create_product');
+
         $product = Product::create(collect($request->validated())->except(['category_id'])->toArray());
 
         $product->categories()->attach($request->input('category_id'));
@@ -25,6 +27,8 @@ class AdminProductsController extends Controller
 
     public function update(ProductUpdateRequest $request, Product $product)
     {
+        $this->authorize('edit_product');
+
         $product->update(collect($request->validated())->except(['category_id'])->toArray());
 
         $product->categories()->sync($request->input('category_id'));
@@ -35,6 +39,8 @@ class AdminProductsController extends Controller
 
     public function destroy(Product $product)
     {
+        $this->authorize('delete_product');
+
         $product->categories()->detach();
         $product->delete();
 

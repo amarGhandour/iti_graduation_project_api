@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 // Guest
 
@@ -68,25 +68,28 @@ Route::post('/empty', function () {
 
 
 // user
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+
+Route::middleware('auth:sanctum')->group(function () {
+
+    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    Route::patch('/user/info', [AuthController::class, 'updateInfo']);
+    Route::patch('/user/password', [AuthController::class, 'updatePassword']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+
+
 });
 
 // admin
 Route::prefix('admin')->group(function () {
-    Route::middleware(['auth:sanctum', 'scope.admin'])->group(function () {
-        Route::get('/user', function (Request $request) {
-            return $request->user();
-        });
-
-        Route::patch('/user/info', [AuthController::class, 'updateInfo']);
-        Route::patch('/user/password', [AuthController::class, 'updatePassword']);
-        Route::post('/logout', [AuthController::class, 'logout']);
+    Route::middleware(['auth:sanctum'])->group(function () {
 
         // products
         Route::apiResource('/products', AdminProductsController::class)->except('index', 'show');
         Route::apiResource('/categories', AdminCategoriesController::class)->except('index', 'show');
-
     });
 
 });

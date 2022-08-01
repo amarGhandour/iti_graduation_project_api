@@ -38,6 +38,14 @@ use Spatie\Permission\Traits\HasRoles;
  * @mixin \Eloquent
  * @property int $is_admin
  * @method static \Illuminate\Database\Eloquent\Builder|User whereIsAdmin($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Order[] $orders
+ * @property-read int|null $orders_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
+ * @property-read int|null $permissions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[] $roles
+ * @property-read int|null $roles_count
+ * @method static \Illuminate\Database\Eloquent\Builder|User permission($permissions)
+ * @method static \Illuminate\Database\Eloquent\Builder|User role($roles, $guard = null)
  */
 class User extends Authenticatable
 {
@@ -72,6 +80,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $guard_name = 'api';
 
     public function orders()
     {

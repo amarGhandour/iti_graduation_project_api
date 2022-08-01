@@ -31,6 +31,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $categories
  * @property-read int|null $categories_count
+ * @property int $featured
+ * @property int $quantity
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereFeatured($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereQuantity($value)
  */
 class Product extends Model
 {

@@ -15,6 +15,8 @@ class AdminCategoriesController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('create_category');
+
         $attributes = $request->validate([
             'name' => ['required', Rule::unique('categories', 'name')],
             'slug' => ['required', Rule::unique('categories', 'slug')]
@@ -30,6 +32,8 @@ class AdminCategoriesController extends Controller
 
     public function update(Request $request, Category $category)
     {
+        $this->authorize('update_category');
+
         $attributes = $request->validate([
             'name' => ['required', Rule::unique('categories', 'name')->ignore($category->id)],
             'slug' => ['required', Rule::unique('categories', 'slug')->ignore($category->id)]
@@ -45,6 +49,8 @@ class AdminCategoriesController extends Controller
 
     public function destroy(Category $category)
     {
+        $this->authorize('delete_category');
+
         $category->products()->detach();
 
         $category->delete();
