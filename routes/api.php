@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminCouponsController;
 use App\Http\Controllers\AdminSlidersController;
 use App\Http\Controllers\Api\V1\AdminCategoriesController;
 use App\Http\Controllers\Api\V1\AdminProductsController;
@@ -72,8 +73,6 @@ Route::post('/empty', function () {
 
 
 // user
-
-
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -99,6 +98,10 @@ Route::prefix('admin')->group(function () {
 
         // sliders
         Route::apiResource('/sliders', AdminSlidersController::class)->except('index', 'show');
+
+        // coupons
+        Route::middleware('can:coupons_management')->apiResource('/coupons', AdminCouponsController::class)->except('show');
+
     });
 
 });

@@ -32,6 +32,8 @@ class Coupon extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function discount($total)
     {
         if ($this->type == 'fixed')

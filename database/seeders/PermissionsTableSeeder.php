@@ -63,6 +63,7 @@ class PermissionsTableSeeder extends Seeder
             'slider_edit',
             'slider_delete',
             'slider_access',
+            'coupons_management'
         ];
 
         foreach ($permissions as $permission) {
