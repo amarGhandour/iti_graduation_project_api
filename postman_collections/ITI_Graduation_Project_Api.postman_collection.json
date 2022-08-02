@@ -29,7 +29,7 @@
                             }
                         },
                         "url": {
-                            "raw": "http://localhost:8000/api/v1/admin/login",
+                            "raw": "http://localhost:8000/api/v1/login",
                             "protocol": "http",
                             "host": [
                                 "localhost"
@@ -38,7 +38,6 @@
                             "path": [
                                 "api",
                                 "v1",
-                                "admin",
                                 "login"
                             ]
                         }
@@ -63,7 +62,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"amar\",\n    \"email\": \"amar@gmail.com\",\n    \"password\": \"password\",\n    \"password_confirm\": \"pasord\"\n\n}",
+                            "raw": "{\n    \"name\": \"amar\",\n    \"email\": \"amar@gmail.com\",\n    \"password\": \"password\",\n    \"password_confirm\": \"password\"\n\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -106,7 +105,7 @@
                             }
                         ],
                         "url": {
-                            "raw": "http://localhost:8000/api/v1/admin/user",
+                            "raw": "http://localhost:8000/api/v1/user",
                             "protocol": "http",
                             "host": [
                                 "localhost"
@@ -115,7 +114,6 @@
                             "path": [
                                 "api",
                                 "v1",
-                                "admin",
                                 "user"
                             ]
                         }
@@ -139,7 +137,7 @@
                             }
                         ],
                         "url": {
-                            "raw": "http://localhost:8000/api/v1/admin/logout",
+                            "raw": "http://localhost:8000/api/v1/logout",
                             "protocol": "http",
                             "host": [
                                 "localhost"
@@ -148,12 +146,584 @@
                             "path": [
                                 "api",
                                 "v1",
-                                "admin",
                                 "logout"
                             ]
                         }
                     },
                     "response": []
+                }
+            ]
+        },
+        {
+            "name": "Admin",
+            "item": [
+                {
+                    "name": "products",
+                    "item": [
+                        {
+                            "name": "add product",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"product 12\",\n    \"slug\": \"product-12\",\n    \"price\": 1234567,\n    \"quantity\": 18,\n    \"description\": \"product 12\",\n    \"category_id\": [5],\n    \"featured\": true\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/admin/products",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "admin",
+                                        "products"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "update product",
+                            "request": {
+                                "method": "PUT",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"product 12\",\n    \"slug\": \"product-12\",\n    \"price\": 1234567,\n    \"quantity\": 7,\n    \"description\": \"product 12\",\n    \"category_id\": [3,4,5],\n    \"featured\": true\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/admin/products/62",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "admin",
+                                        "products",
+                                        "62"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "delete a product",
+                            "request": {
+                                "method": "DELETE",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/admin/products/61",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "admin",
+                                        "products",
+                                        "61"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Categories",
+                    "item": [
+                        {
+                            "name": "add new category",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"category 20\",\n    \"slug\": \"category-20\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/admin/categories",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "admin",
+                                        "categories"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "update a category",
+                            "request": {
+                                "method": "PUT",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"category 2\",\n    \"slug\": \"category 2\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/admin/categories/6",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "admin",
+                                        "categories",
+                                        "6"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "delete a category",
+                            "request": {
+                                "method": "DELETE",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/admin/categories/6",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "admin",
+                                        "categories",
+                                        "6"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Sliders",
+                    "item": [
+                        {
+                            "name": "add new slider",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"title\": \"slider 20\",\n    \"slug\": \"slider-20\",\n    \"description\": \"description slider 20\",\n    \"status\": true\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/admin/sliders",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "admin",
+                                        "sliders"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "update a slider",
+                            "request": {
+                                "method": "PUT",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"title\": \"slider 2\",\n    \"slug\": \"slider-2\",\n    \"description\": \"slider description 2\",\n    \"status\": false\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/admin/sliders/1",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "admin",
+                                        "sliders",
+                                        "1"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "delete a slider",
+                            "request": {
+                                "method": "DELETE",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/admin/sliders/5",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "admin",
+                                        "sliders",
+                                        "5"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Coupons",
+                    "item": [
+                        {
+                            "name": "add new coupon",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"code\": \"CHJ456\",\n    \"type\": \"fixed\",\n    \"value\": \"2000\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/admin/coupons",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "admin",
+                                        "coupons"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "list of paginated coupons",
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            },
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"title\": \"slider 20\",\n    \"slug\": \"slider-20\",\n    \"description\": \"description slider 20\",\n    \"status\": true\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/admin/coupons",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "admin",
+                                        "coupons"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "update a coupon",
+                            "request": {
+                                "method": "PUT",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"code\": \"ABC123\",\n    \"type\": \"percent\",\n    \"percent_off\": \"20\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/admin/coupons/1",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "admin",
+                                        "coupons",
+                                        "1"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "delete a coupon",
+                            "request": {
+                                "method": "DELETE",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/admin/coupons/1",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "admin",
+                                        "coupons",
+                                        "1"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Coupons Copy",
+                    "item": [
+                        {
+                            "name": "add new coupon",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"code\": \"CHJ456\",\n    \"type\": \"fixed\",\n    \"value\": \"2000\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/admin/coupons",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "admin",
+                                        "coupons"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "list of paginated coupons",
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            },
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"title\": \"slider 20\",\n    \"slug\": \"slider-20\",\n    \"description\": \"description slider 20\",\n    \"status\": true\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/admin/coupons",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "admin",
+                                        "coupons"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "update a coupon",
+                            "request": {
+                                "method": "PUT",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"code\": \"ABC123\",\n    \"type\": \"percent\",\n    \"percent_off\": \"20\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/admin/coupons/1",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "admin",
+                                        "coupons",
+                                        "1"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "delete a coupon",
+                            "request": {
+                                "method": "DELETE",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/admin/coupons/1",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "admin",
+                                        "coupons",
+                                        "1"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
                 }
             ]
         },
@@ -191,7 +761,7 @@
                                 "header": [],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\n    \"id\": 1,\n    \"name\":\"Aut quia eligendi debitis est.\" ,\n    \"price\": 12920900\n}",
+                                    "raw": "{\n    \"id\": 1\n}",
                                     "options": {
                                         "raw": {
                                             "language": "json"
@@ -409,7 +979,7 @@
                                 "header": [],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\n    \"stripeToken\": \"tok_1LPbANJSb1KZM6uYjmdbZFrO\",\n    \"email\":\"amar@gmail.com\" \n}",
+                                    "raw": "{\n    \"stripeToken\": \"tok_1LQKTuJSb1KZM6uYiJ1nQn8t\",\n    \"email\":\"amar@gmail.com\", \n     \"name\" : \"amar ghandour\",\n    \"address\": \"my address\",\n    \"city\": \"my city\",\n    \"province\": \"my province\",\n    \"postalCode\": \"3494\",\n    \"phone\": \"0104585443\",\n    \"nameOnCard\":\"my name on card\"\n}",
                                     "options": {
                                         "raw": {
                                             "language": "json"
@@ -443,7 +1013,7 @@
                                 "method": "GET",
                                 "header": [],
                                 "url": {
-                                    "raw": "http://localhost:8000/api/v1/products?category=molestias&page=2",
+                                    "raw": "http://localhost:8000/api/v1/products?category=earum&page=2",
                                     "protocol": "http",
                                     "host": [
                                         "localhost"
@@ -457,7 +1027,7 @@
                                     "query": [
                                         {
                                             "key": "category",
-                                            "value": "molestias"
+                                            "value": "earum"
                                         },
                                         {
                                             "key": "page",
@@ -646,20 +1216,138 @@
                             "response": []
                         }
                     ]
+                },
+                {
+                    "name": "Sliders",
+                    "item": [
+                        {
+                            "name": "list of paginated sliders",
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            },
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json",
+                                        "type": "default",
+                                        "disabled": true
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "formdata",
+                                    "formdata": []
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/sliders",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "sliders"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "list of sliders Copy",
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            },
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json",
+                                        "type": "default",
+                                        "disabled": true
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "formdata",
+                                    "formdata": []
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/sliders?all=1",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "sliders"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "all",
+                                            "value": "1"
+                                        }
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Colors",
+                    "item": [
+                        {
+                            "name": "list of colors",
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            },
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json",
+                                        "type": "default",
+                                        "disabled": true
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "formdata",
+                                    "formdata": []
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/colors",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "colors"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "all",
+                                            "value": "1",
+                                            "disabled": true
+                                        }
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
                 }
             ]
         }
     ],
-    "auth": {
-        "type": "bearer",
-        "bearer": [
-            {
-                "key": "token",
-                "value": "7|u9AQrpNjLAD0MmhtiQDxXQBtSxBlkEj9RirC4DKh",
-                "type": "string"
-            }
-        ]
-    },
     "event": [
         {
             "listen": "prerequest",
