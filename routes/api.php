@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminColorsController;
 use App\Http\Controllers\AdminCouponsController;
 use App\Http\Controllers\AdminSlidersController;
 use App\Http\Controllers\Api\V1\AdminCategoriesController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Api\V1\CheckoutController;
 use App\Http\Controllers\Api\V1\CouponController;
 use App\Http\Controllers\Api\V1\ProductsController;
 use App\Http\Controllers\Api\V1\SaveForLaterController;
+use App\Http\Controllers\ColorController;
 use App\Http\Controllers\SliderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +45,10 @@ Route::get('categories', [CategoryController::class, 'index']);
 // sliders
 Route::get('sliders', [SliderController::class, 'index']);
 
+// colors
+Route::get('colors', [ColorController::class, 'index']);
+
+
 // shopping cart
 Route::get('/cart', [CartController::class, 'index']);
 Route::post('/cart', [CartController::class, 'store']);
@@ -50,27 +56,22 @@ Route::patch('/cart/{rowId}', [CartController::class, 'update']);
 Route::delete('/cart/{rowId}', [CartController::class, 'destroy']);
 Route::post('/cart/{rowId}/switchToSaveForLater', [CartController::class, 'switchToSaveForLater']);
 
-
 // save for later
 Route::get('/saveForLater', [SaveForLaterController::class, 'index']);
 Route::post('/saveForLater/{rowId}/switchToCart', [SaveForLaterController::class, 'switchToCart']);
 Route::delete('/saveForLater/{rowId}', [SaveForLaterController::class, 'destroy']);
 
-
 // coupons
 Route::post('coupons', [CouponController::class, 'store']);
 Route::delete('coupons', [CouponController::class, 'destroy']);
 
-
 // stripe
 Route::post('/checkout', [CheckoutController::class, 'store']);
-
 
 // for testing only
 Route::post('/empty', function () {
     \Gloudemans\Shoppingcart\Facades\Cart::instance('shopping')->destroy();
 });
-
 
 // user
 Route::middleware('auth:sanctum')->group(function () {
@@ -101,6 +102,9 @@ Route::prefix('admin')->group(function () {
 
         // coupons
         Route::middleware('can:coupons_management')->apiResource('/coupons', AdminCouponsController::class)->except('show');
+
+        // colors
+        Route::middleware('can:colors_management')->apiResource('/colors', AdminColorsController::class)->except('show', 'index');
 
     });
 

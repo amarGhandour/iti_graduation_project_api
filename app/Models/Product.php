@@ -51,4 +51,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Slider::class)->withTimestamps();
     }
+
+    public function colors()
+    {
+        return $this->belongsToMany(Color::class)->withPivot('image')->withTimestamps();
+    }
 }

@@ -19,7 +19,7 @@ class ProductsController extends Controller
     public function index(Request $request)
     {
 
-        $products = Product::with('categories');
+        $products = Product::with('categories', 'colors');
 
         if ($request->has('category')) {
             $products->whereHas('categories', function ($query) use ($request) {

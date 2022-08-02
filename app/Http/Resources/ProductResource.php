@@ -22,6 +22,7 @@ class ProductResource extends JsonResource
             'price' => $this->price,
             'quantity' => $this->quantity,
             'categories' => $this->whenLoaded('categories')->implode('name', ','),
+            'colors' => $this->whenLoaded('colors')
         ];
     }
 }

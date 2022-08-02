@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\Slider;
@@ -22,8 +23,11 @@ class DatabaseSeeder extends Seeder
 
         $categories = Category::factory()->count(5)->create();
 
-        $products = Product::factory()->count(50)->create()->each(function ($product) use ($categories) {
+        $colors = Color::factory()->count(5)->create();
+
+        $products = Product::factory()->count(50)->create()->each(function ($product) use ($categories, $colors) {
             $product->categories()->attach($categories->random(2));
+            $product->colors()->attach($colors->random(3));
         });
 
         $slidesWithTrueStatus = Slider::factory()->count(3)->create([
