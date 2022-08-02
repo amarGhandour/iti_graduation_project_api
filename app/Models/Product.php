@@ -46,4 +46,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Category::class)->withTimestamps();
     }
+
+    public function sliders()
+    {
+        return $this->belongsToMany(Slider::class)->withTimestamps();
+    }
 }

@@ -59,6 +59,10 @@ class PermissionsTableSeeder extends Seeder
             'order_delete',
             'review_access',
             'review_show',
+            'slider_create',
+            'slider_edit',
+            'slider_delete',
+            'slider_access',
         ];
 
         foreach ($permissions as $permission) {

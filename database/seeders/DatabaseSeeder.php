@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Coupon;
 use App\Models\Product;
+use App\Models\Slider;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,9 +22,19 @@ class DatabaseSeeder extends Seeder
 
         $categories = Category::factory()->count(5)->create();
 
-        Product::factory()->count(50)->create()->each(function ($product) use ($categories) {
+        $products = Product::factory()->count(50)->create()->each(function ($product) use ($categories) {
             $product->categories()->attach($categories->random(2));
         });
+
+        $slidesWithTrueStatus = Slider::factory()->count(3)->create([
+            'status' => true
+        ])->each(function ($slider) use ($products) {
+            $slider->products()->attach($products->random(10));
+        });
+
+        $slidesWithFalseStatus = Slider::factory()->count(2)->create()->each(function ($slider) use ($products) {
+            $slider->products()->attach($products->random(10));
+        });;
 
         Coupon::insert([[
             'code' => 'ABC123',

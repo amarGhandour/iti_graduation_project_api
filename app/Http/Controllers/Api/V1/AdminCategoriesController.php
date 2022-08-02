@@ -32,7 +32,7 @@ class AdminCategoriesController extends Controller
 
     public function update(Request $request, Category $category)
     {
-        $this->authorize('update_category');
+        $this->authorize('edit_category');
 
         $attributes = $request->validate([
             'name' => ['required', Rule::unique('categories', 'name')->ignore($category->id)],

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminSlidersController;
 use App\Http\Controllers\Api\V1\AdminCategoriesController;
 use App\Http\Controllers\Api\V1\AdminProductsController;
 use App\Http\Controllers\Api\V1\AuthController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Api\V1\CheckoutController;
 use App\Http\Controllers\Api\V1\CouponController;
 use App\Http\Controllers\Api\V1\ProductsController;
 use App\Http\Controllers\Api\V1\SaveForLaterController;
+use App\Http\Controllers\SliderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +39,8 @@ Route::get('/products/{product}', [ProductsController::class, 'show']);
 // categories
 Route::get('categories', [CategoryController::class, 'index']);
 
+// sliders
+Route::get('sliders', [SliderController::class, 'index']);
 
 // shopping cart
 Route::get('/cart', [CartController::class, 'index']);
@@ -89,7 +93,12 @@ Route::prefix('admin')->group(function () {
 
         // products
         Route::apiResource('/products', AdminProductsController::class)->except('index', 'show');
+
+        // categories
         Route::apiResource('/categories', AdminCategoriesController::class)->except('index', 'show');
+
+        // sliders
+        Route::apiResource('/sliders', AdminSlidersController::class)->except('index', 'show');
     });
 
 });
