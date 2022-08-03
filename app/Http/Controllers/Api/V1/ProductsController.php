@@ -19,11 +19,22 @@ class ProductsController extends Controller
     public function index(Request $request)
     {
 
-        $products = Product::with('categories', 'colors');
+        $products = Product::with('categories');
 
         if ($request->has('category')) {
             $products->whereHas('categories', function ($query) use ($request) {
                 $query->where('slug', $request->input('category'));
+            });
+        }
+
+        if ($request->has('price')) {
+            $range = explode('-', $request->input('price'));
+            $products->whereBetween('price', $range);
+        }
+
+        if ($request->has('color')) {
+            $products->whereHas('colors', function ($query) use ($request) {
+                $query->where('name', $request->input('color'));
             });
         }
 
@@ -34,8 +45,7 @@ class ProductsController extends Controller
 
     public function show(Product $product)
     {
-
+        $product->load('categories');
         return $this->response(Response::HTTP_OK, true, null, ProductResource::make($product));
-
     }
 }

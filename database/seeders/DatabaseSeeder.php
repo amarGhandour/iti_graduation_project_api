@@ -30,15 +30,15 @@ class DatabaseSeeder extends Seeder
             $product->colors()->attach($colors->random(3));
         });
 
-        $slidesWithTrueStatus = Slider::factory()->count(3)->create([
-            'status' => true
-        ])->each(function ($slider) use ($products) {
-            $slider->products()->attach($products->random(10));
+        $categories->each(function ($category) {
+            Slider::factory()->create([
+                'route' => "products?category=$category->name",
+            ]);
         });
 
-        $slidesWithFalseStatus = Slider::factory()->count(2)->create()->each(function ($slider) use ($products) {
-            $slider->products()->attach($products->random(10));
-        });;
+        $slidesWithFalseStatus = Slider::factory()->create([
+            'route' => "products?category=$categories[1]->name",
+        ]);
 
         Coupon::insert([[
             'code' => 'ABC123',

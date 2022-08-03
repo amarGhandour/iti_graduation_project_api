@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->id();
             $table->string('title')->unique();
             $table->string('slug')->unique();
+            $table->string('route')->unique();
             $table->text('description');
             $table->string('image')->nullable();
             $table->boolean('status')->default(false);
