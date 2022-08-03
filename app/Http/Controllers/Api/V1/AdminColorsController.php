@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\ColorCollection;
 use App\Http\Resources\ColorResource;
 use App\Http\Traits\ApiResponse;

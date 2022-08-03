@@ -62,6 +62,8 @@ class Order extends Model
 
     protected $guarded = [];
 
+    protected $with = ['items'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -70,5 +72,10 @@ class Order extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class)->withPivot('quantity', 'price', 'subtotal')->withTimestamps();
+    }
+
+    public function items()
+    {
+        return $this->hasMany(OrderProduct::class, 'order_id');
     }
 }
