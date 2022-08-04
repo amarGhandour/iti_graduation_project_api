@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Color;
 use App\Models\Coupon;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\Slider;
 use Illuminate\Database\Seeder;
 
@@ -28,6 +29,9 @@ class DatabaseSeeder extends Seeder
         $products = Product::factory()->count(50)->create()->each(function ($product) use ($categories, $colors) {
             $product->categories()->attach($categories->random(2));
             $product->colors()->attach($colors->random(3));
+            Review::factory()->count(10)->create([
+                'product_id' => $product
+            ]);
         });
 
         $categories->each(function ($category) {

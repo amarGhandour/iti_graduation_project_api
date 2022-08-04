@@ -56,4 +56,14 @@ class Product extends Model
     {
         return $this->belongsToMany(Color::class)->withPivot('image')->withTimestamps();
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function getRelatedProductsAttribute()
+    {
+        return $this->withAvg('reviews', 'rating')->inRandomOrder()->take(8)->get();
+    }
 }

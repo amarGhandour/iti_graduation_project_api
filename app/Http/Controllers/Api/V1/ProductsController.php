@@ -19,7 +19,7 @@ class ProductsController extends Controller
     public function index(Request $request)
     {
 
-        $products = Product::with('categories');
+        $products = Product::with('categories')->withAvg('reviews', 'rating');
 
         if ($request->has('category')) {
             $products->whereHas('categories', function ($query) use ($request) {
@@ -45,7 +45,12 @@ class ProductsController extends Controller
 
     public function show(Product $product)
     {
-        $product->load('categories');
+        $product->load('categories', 'reviews.user')->loadAvg('reviews', 'rating');
+
+        $relatedProducts = Product::inRandomOrder()->take(8)->get();
+
+        $product->append('related_products');
+
         return $this->response(Response::HTTP_OK, true, null, ProductResource::make($product));
     }
 }

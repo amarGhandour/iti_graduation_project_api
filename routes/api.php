@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\ProductsController;
 use App\Http\Controllers\Api\V1\SaveForLaterController;
 use App\Http\Controllers\Api\V1\SliderController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -87,6 +88,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // orders
     Route::apiResource('/orders', OrderController::class)->only('index', 'show');
+
+    // reviews
+    Route::post('/products/{product}/reviews', [ReviewController::class, 'store']);
+    Route::apiResource('/reviews', ReviewController::class)->only('update', 'destroy');
 });
 
 // admin
