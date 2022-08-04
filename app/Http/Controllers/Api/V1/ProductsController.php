@@ -38,6 +38,17 @@ class ProductsController extends Controller
             });
         }
 
+        if ($request->has('rating')) {
+            $products->orderByDesc('reviews_avg_rating');
+        }
+
+        if ($request->has('most-bought')) {
+            $products->leftJoin('order_product', 'products.id', '=', 'order_product.product_id')
+                ->selectRaw('products.*, COALESCE(sum(order_product.quantity),0) total')
+                ->groupBy('products.id')
+                ->orderBy('total', 'desc');
+        }
+
         $products = $request->input('all') == 1 ? $products->get() : $products->paginate(self::PAGINATE_PER_PAGE);
 
         return ProductCollection::make($products);
@@ -46,8 +57,6 @@ class ProductsController extends Controller
     public function show(Product $product)
     {
         $product->load('categories', 'reviews.user')->loadAvg('reviews', 'rating');
-
-        $relatedProducts = Product::inRandomOrder()->take(8)->get();
 
         $product->append('related_products');
 
