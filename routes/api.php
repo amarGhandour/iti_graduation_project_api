@@ -14,9 +14,10 @@ use App\Http\Controllers\Api\V1\ColorController;
 use App\Http\Controllers\Api\V1\CouponController;
 use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\ProductsController;
+use App\Http\Controllers\Api\V1\ReviewController;
 use App\Http\Controllers\Api\V1\SaveForLaterController;
 use App\Http\Controllers\Api\V1\SliderController;
-use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\Api\V1\VerifyEmailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,11 +32,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+// Guest
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
-// Guest
+// Verify email
+Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+    ->middleware(['signed', 'throttle:6,1'])
+    ->name('verification.verify');
+
+// Resend link to verify email
+Route::post('/email/verify/resend', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return response()->json(['message' => 'Verification link sent!']);
+})->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
 
 // products
 Route::get('/products', [ProductsController::class, 'index']);
@@ -56,8 +66,10 @@ Route::post('/empty', function () {
     \Gloudemans\Shoppingcart\Facades\Cart::instance('shopping')->destroy();
 });
 
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
 // user
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         return $request->user();
@@ -65,7 +77,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::patch('/user/info', [AuthController::class, 'updateInfo']);
     Route::patch('/user/password', [AuthController::class, 'updatePassword']);
-    Route::post('/logout', [AuthController::class, 'logout']);
 
     // shopping cart
     Route::get('/cart', [CartController::class, 'index']);
