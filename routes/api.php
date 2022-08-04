@@ -12,8 +12,10 @@ use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\CheckoutController;
 use App\Http\Controllers\Api\V1\ColorController;
 use App\Http\Controllers\Api\V1\CouponController;
+use App\Http\Controllers\Api\V1\ForgotPasswordController;
 use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\ProductsController;
+use App\Http\Controllers\Api\V1\ResetPasswordController;
 use App\Http\Controllers\Api\V1\ReviewController;
 use App\Http\Controllers\Api\V1\SaveForLaterController;
 use App\Http\Controllers\Api\V1\SliderController;
@@ -35,6 +37,13 @@ use Illuminate\Support\Facades\Route;
 // Guest
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+// password reset
+Route::post('/password/email', [ForgotPasswordController::class, '__invoke']);
+Route::post('/password/reset', [ResetPasswordController::class, '__invoke']);
+Route::get('password/reset', function () {
+    dd('here');
+})->name('password.reset');
 
 // Verify email
 Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
