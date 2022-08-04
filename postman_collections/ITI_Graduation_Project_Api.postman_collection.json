@@ -9,6 +9,492 @@
             "name": "User",
             "item": [
                 {
+                    "name": "orders",
+                    "item": [
+                        {
+                            "name": "list orders of user",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/orders",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "orders"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "show a sepeicfic order from orders of user",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/orders/1",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "orders",
+                                        "1"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Cart",
+                    "item": [
+                        {
+                            "name": "list of cart items",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/cart",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "cart"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "add item to cart",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"id\": 2\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/cart",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "cart"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "update item quantity at cart",
+                            "request": {
+                                "method": "PATCH",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"quantity\": 5\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/cart/027c91341fd5cf4d2579b49c4b6a90da",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "cart",
+                                        "027c91341fd5cf4d2579b49c4b6a90da"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "switch item to save for later",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"id\": 1,\n    \"name\":\"Aut quia eligendi debitis est.\" ,\n    \"price\": 12920900\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/cart/027c91341fd5cf4d2579b49c4b6a90da/switchToSaveForLater",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "cart",
+                                        "027c91341fd5cf4d2579b49c4b6a90da",
+                                        "switchToSaveForLater"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Delete item fromcart",
+                            "request": {
+                                "method": "DELETE",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"id\": 1,\n    \"name\":\"Aut quia eligendi debitis est.\" ,\n    \"price\": 12920900\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/cart/027c91341fd5cf4d2579b49c4b6a90da",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "cart",
+                                        "027c91341fd5cf4d2579b49c4b6a90da"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Save for later",
+                    "item": [
+                        {
+                            "name": "list of save for later items",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/saveForLater",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "saveForLater"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "switch item to cart",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"id\": 1,\n    \"name\":\"Aut quia eligendi debitis est.\" ,\n    \"price\": 12920900\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/saveForLater/027c91341fd5cf4d2579b49c4b6a90da/switchToCart",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "saveForLater",
+                                        "027c91341fd5cf4d2579b49c4b6a90da",
+                                        "switchToCart"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Delete item from save for later",
+                            "request": {
+                                "method": "DELETE",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"id\": 1,\n    \"name\":\"Aut quia eligendi debitis est.\" ,\n    \"price\": 12920900\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/saveForLater/027c91341fd5cf4d2579b49c4b6a90da",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "saveForLater",
+                                        "027c91341fd5cf4d2579b49c4b6a90da"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "checkout",
+                    "item": [
+                        {
+                            "name": "checkout pay",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"stripeToken\": \"tok_1LSUi6JSb1KZM6uYVIKyb0nJ\",\n    \"email\":\"user@user.com\", \n     \"name\" : \"user\",\n    \"address\": \"my address\",\n    \"city\": \"my city\",\n    \"province\": \"my province\",\n    \"postalCode\": \"3494\",\n    \"phone\": \"0104585443\",\n    \"nameOnCard\":\"my name on card\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/checkout",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "checkout"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Coupons",
+                    "item": [
+                        {
+                            "name": "Apply Coupons",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"couponCode\": \"ABC123\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/coupons",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "coupons"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Remove coupon",
+                            "request": {
+                                "method": "DELETE",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"couponCode\": \"ABC123\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/coupons",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "coupons"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "reviews",
+                    "item": [
+                        {
+                            "name": "make a review for product",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"rating\": 46\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/products/16/reviews",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "products",
+                                        "16",
+                                        "reviews"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "upate a review",
+                            "request": {
+                                "method": "PATCH",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"rating\": 42\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/reviews/3",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "reviews",
+                                        "3"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Delete a review",
+                            "request": {
+                                "method": "DELETE",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"rating\": 42\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/reviews/3",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "reviews",
+                                        "3"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
                     "name": "login",
                     "request": {
                         "method": "POST",
@@ -21,7 +507,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"email\": \"admin@admin.com\",\n    \"password\": \"password\"\n}",
+                            "raw": "{\n    \"email\": \"user@user.com\",\n    \"password\": \"password\"\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -129,13 +615,17 @@
                                 "key": "Accept",
                                 "value": "application/json",
                                 "type": "default"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "default"
                             }
                         ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
                         "url": {
                             "raw": "http://localhost:8000/api/v1/logout",
                             "protocol": "http",
@@ -592,16 +1082,16 @@
                     ]
                 },
                 {
-                    "name": "Coupons Copy",
+                    "name": "Orders",
                     "item": [
                         {
-                            "name": "add new coupon",
+                            "name": "Update order status",
                             "request": {
-                                "method": "POST",
+                                "method": "PATCH",
                                 "header": [],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\n    \"code\": \"CHJ456\",\n    \"type\": \"fixed\",\n    \"value\": \"2000\"\n}",
+                                    "raw": "{\n    \"shipped\": true\n}",
                                     "options": {
                                         "raw": {
                                             "language": "json"
@@ -609,7 +1099,7 @@
                                     }
                                 },
                                 "url": {
-                                    "raw": "http://localhost:8000/api/v1/admin/coupons",
+                                    "raw": "http://localhost:8000/api/v1/admin/orders/1",
                                     "protocol": "http",
                                     "host": [
                                         "localhost"
@@ -619,104 +1109,7 @@
                                         "api",
                                         "v1",
                                         "admin",
-                                        "coupons"
-                                    ]
-                                }
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "list of paginated coupons",
-                            "protocolProfileBehavior": {
-                                "disableBodyPruning": true
-                            },
-                            "request": {
-                                "method": "GET",
-                                "header": [],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\n    \"title\": \"slider 20\",\n    \"slug\": \"slider-20\",\n    \"description\": \"description slider 20\",\n    \"status\": true\n}",
-                                    "options": {
-                                        "raw": {
-                                            "language": "json"
-                                        }
-                                    }
-                                },
-                                "url": {
-                                    "raw": "http://localhost:8000/api/v1/admin/coupons",
-                                    "protocol": "http",
-                                    "host": [
-                                        "localhost"
-                                    ],
-                                    "port": "8000",
-                                    "path": [
-                                        "api",
-                                        "v1",
-                                        "admin",
-                                        "coupons"
-                                    ]
-                                }
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "update a coupon",
-                            "request": {
-                                "method": "PUT",
-                                "header": [],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\n    \"code\": \"ABC123\",\n    \"type\": \"percent\",\n    \"percent_off\": \"20\"\n}",
-                                    "options": {
-                                        "raw": {
-                                            "language": "json"
-                                        }
-                                    }
-                                },
-                                "url": {
-                                    "raw": "http://localhost:8000/api/v1/admin/coupons/1",
-                                    "protocol": "http",
-                                    "host": [
-                                        "localhost"
-                                    ],
-                                    "port": "8000",
-                                    "path": [
-                                        "api",
-                                        "v1",
-                                        "admin",
-                                        "coupons",
-                                        "1"
-                                    ]
-                                }
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "delete a coupon",
-                            "request": {
-                                "method": "DELETE",
-                                "header": [],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "",
-                                    "options": {
-                                        "raw": {
-                                            "language": "json"
-                                        }
-                                    }
-                                },
-                                "url": {
-                                    "raw": "http://localhost:8000/api/v1/admin/coupons/1",
-                                    "protocol": "http",
-                                    "host": [
-                                        "localhost"
-                                    ],
-                                    "port": "8000",
-                                    "path": [
-                                        "api",
-                                        "v1",
-                                        "admin",
-                                        "coupons",
+                                        "orders",
                                         "1"
                                     ]
                                 }
@@ -730,280 +1123,6 @@
         {
             "name": "Guest",
             "item": [
-                {
-                    "name": "Cart",
-                    "item": [
-                        {
-                            "name": "list of cart items",
-                            "request": {
-                                "method": "GET",
-                                "header": [],
-                                "url": {
-                                    "raw": "http://localhost:8000/api/v1/cart",
-                                    "protocol": "http",
-                                    "host": [
-                                        "localhost"
-                                    ],
-                                    "port": "8000",
-                                    "path": [
-                                        "api",
-                                        "v1",
-                                        "cart"
-                                    ]
-                                }
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "add item to cart",
-                            "request": {
-                                "method": "POST",
-                                "header": [],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\n    \"id\": 1\n}",
-                                    "options": {
-                                        "raw": {
-                                            "language": "json"
-                                        }
-                                    }
-                                },
-                                "url": {
-                                    "raw": "http://localhost:8000/api/v1/cart",
-                                    "protocol": "http",
-                                    "host": [
-                                        "localhost"
-                                    ],
-                                    "port": "8000",
-                                    "path": [
-                                        "api",
-                                        "v1",
-                                        "cart"
-                                    ]
-                                }
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "update item quantity at cart",
-                            "request": {
-                                "method": "PATCH",
-                                "header": [],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\n    \"quantity\": 5\n}",
-                                    "options": {
-                                        "raw": {
-                                            "language": "json"
-                                        }
-                                    }
-                                },
-                                "url": {
-                                    "raw": "http://localhost:8000/api/v1/cart/027c91341fd5cf4d2579b49c4b6a90da",
-                                    "protocol": "http",
-                                    "host": [
-                                        "localhost"
-                                    ],
-                                    "port": "8000",
-                                    "path": [
-                                        "api",
-                                        "v1",
-                                        "cart",
-                                        "027c91341fd5cf4d2579b49c4b6a90da"
-                                    ]
-                                }
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "switch item to save for later",
-                            "request": {
-                                "method": "POST",
-                                "header": [],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\n    \"id\": 1,\n    \"name\":\"Aut quia eligendi debitis est.\" ,\n    \"price\": 12920900\n}",
-                                    "options": {
-                                        "raw": {
-                                            "language": "json"
-                                        }
-                                    }
-                                },
-                                "url": {
-                                    "raw": "http://localhost:8000/api/v1/cart/027c91341fd5cf4d2579b49c4b6a90da/switchToSaveForLater",
-                                    "protocol": "http",
-                                    "host": [
-                                        "localhost"
-                                    ],
-                                    "port": "8000",
-                                    "path": [
-                                        "api",
-                                        "v1",
-                                        "cart",
-                                        "027c91341fd5cf4d2579b49c4b6a90da",
-                                        "switchToSaveForLater"
-                                    ]
-                                }
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "Delete item fromcart",
-                            "request": {
-                                "method": "DELETE",
-                                "header": [],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\n    \"id\": 1,\n    \"name\":\"Aut quia eligendi debitis est.\" ,\n    \"price\": 12920900\n}",
-                                    "options": {
-                                        "raw": {
-                                            "language": "json"
-                                        }
-                                    }
-                                },
-                                "url": {
-                                    "raw": "http://localhost:8000/api/v1/cart/027c91341fd5cf4d2579b49c4b6a90da",
-                                    "protocol": "http",
-                                    "host": [
-                                        "localhost"
-                                    ],
-                                    "port": "8000",
-                                    "path": [
-                                        "api",
-                                        "v1",
-                                        "cart",
-                                        "027c91341fd5cf4d2579b49c4b6a90da"
-                                    ]
-                                }
-                            },
-                            "response": []
-                        }
-                    ]
-                },
-                {
-                    "name": "Save for later",
-                    "item": [
-                        {
-                            "name": "list of save for later items",
-                            "request": {
-                                "method": "GET",
-                                "header": [],
-                                "url": {
-                                    "raw": "http://localhost:8000/api/v1/saveForLater",
-                                    "protocol": "http",
-                                    "host": [
-                                        "localhost"
-                                    ],
-                                    "port": "8000",
-                                    "path": [
-                                        "api",
-                                        "v1",
-                                        "saveForLater"
-                                    ]
-                                }
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "switch item to cart",
-                            "request": {
-                                "method": "POST",
-                                "header": [],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\n    \"id\": 1,\n    \"name\":\"Aut quia eligendi debitis est.\" ,\n    \"price\": 12920900\n}",
-                                    "options": {
-                                        "raw": {
-                                            "language": "json"
-                                        }
-                                    }
-                                },
-                                "url": {
-                                    "raw": "http://localhost:8000/api/v1/saveForLater/027c91341fd5cf4d2579b49c4b6a90da/switchToCart",
-                                    "protocol": "http",
-                                    "host": [
-                                        "localhost"
-                                    ],
-                                    "port": "8000",
-                                    "path": [
-                                        "api",
-                                        "v1",
-                                        "saveForLater",
-                                        "027c91341fd5cf4d2579b49c4b6a90da",
-                                        "switchToCart"
-                                    ]
-                                }
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "Delete item from save for later",
-                            "request": {
-                                "method": "DELETE",
-                                "header": [],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\n    \"id\": 1,\n    \"name\":\"Aut quia eligendi debitis est.\" ,\n    \"price\": 12920900\n}",
-                                    "options": {
-                                        "raw": {
-                                            "language": "json"
-                                        }
-                                    }
-                                },
-                                "url": {
-                                    "raw": "http://localhost:8000/api/v1/saveForLater/027c91341fd5cf4d2579b49c4b6a90da",
-                                    "protocol": "http",
-                                    "host": [
-                                        "localhost"
-                                    ],
-                                    "port": "8000",
-                                    "path": [
-                                        "api",
-                                        "v1",
-                                        "saveForLater",
-                                        "027c91341fd5cf4d2579b49c4b6a90da"
-                                    ]
-                                }
-                            },
-                            "response": []
-                        }
-                    ]
-                },
-                {
-                    "name": "checkout",
-                    "item": [
-                        {
-                            "name": "checkout pay",
-                            "request": {
-                                "method": "POST",
-                                "header": [],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\n    \"stripeToken\": \"tok_1LQKTuJSb1KZM6uYiJ1nQn8t\",\n    \"email\":\"amar@gmail.com\", \n     \"name\" : \"amar ghandour\",\n    \"address\": \"my address\",\n    \"city\": \"my city\",\n    \"province\": \"my province\",\n    \"postalCode\": \"3494\",\n    \"phone\": \"0104585443\",\n    \"nameOnCard\":\"my name on card\"\n}",
-                                    "options": {
-                                        "raw": {
-                                            "language": "json"
-                                        }
-                                    }
-                                },
-                                "url": {
-                                    "raw": "http://localhost:8000/api/v1/checkout",
-                                    "protocol": "http",
-                                    "host": [
-                                        "localhost"
-                                    ],
-                                    "port": "8000",
-                                    "path": [
-                                        "api",
-                                        "v1",
-                                        "checkout"
-                                    ]
-                                }
-                            },
-                            "response": []
-                        }
-                    ]
-                },
                 {
                     "name": "products",
                     "item": [
@@ -1070,6 +1189,37 @@
                             "response": []
                         },
                         {
+                            "name": "list of all products with price query string",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "http://localhost:8000/api/v1/products?all=1&price=15000-20000",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "products"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "all",
+                                            "value": "1"
+                                        },
+                                        {
+                                            "key": "price",
+                                            "value": "15000-20000"
+                                        }
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
                             "name": "show specified product",
                             "request": {
                                 "method": "GET",
@@ -1081,7 +1231,7 @@
                                     }
                                 ],
                                 "url": {
-                                    "raw": "http://localhost:8000/api/v1/products/100",
+                                    "raw": "http://localhost:8000/api/v1/products/16",
                                     "protocol": "http",
                                     "host": [
                                         "localhost"
@@ -1091,7 +1241,7 @@
                                         "api",
                                         "v1",
                                         "products",
-                                        "100"
+                                        "16"
                                     ]
                                 }
                             },
@@ -1153,71 +1303,6 @@
                     ]
                 },
                 {
-                    "name": "Coupons",
-                    "item": [
-                        {
-                            "name": "Apply Coupons",
-                            "request": {
-                                "method": "POST",
-                                "header": [],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\n    \"couponCode\": \"ABC123\"\n}",
-                                    "options": {
-                                        "raw": {
-                                            "language": "json"
-                                        }
-                                    }
-                                },
-                                "url": {
-                                    "raw": "http://localhost:8000/api/v1/coupons",
-                                    "protocol": "http",
-                                    "host": [
-                                        "localhost"
-                                    ],
-                                    "port": "8000",
-                                    "path": [
-                                        "api",
-                                        "v1",
-                                        "coupons"
-                                    ]
-                                }
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "Remove coupon",
-                            "request": {
-                                "method": "DELETE",
-                                "header": [],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\n    \"couponCode\": \"ABC123\"\n}",
-                                    "options": {
-                                        "raw": {
-                                            "language": "json"
-                                        }
-                                    }
-                                },
-                                "url": {
-                                    "raw": "http://localhost:8000/api/v1/coupons",
-                                    "protocol": "http",
-                                    "host": [
-                                        "localhost"
-                                    ],
-                                    "port": "8000",
-                                    "path": [
-                                        "api",
-                                        "v1",
-                                        "coupons"
-                                    ]
-                                }
-                            },
-                            "response": []
-                        }
-                    ]
-                },
-                {
                     "name": "Sliders",
                     "item": [
                         {
@@ -1256,7 +1341,7 @@
                             "response": []
                         },
                         {
-                            "name": "list of sliders Copy",
+                            "name": "list of sliders",
                             "protocolProfileBehavior": {
                                 "disableBodyPruning": true
                             },
