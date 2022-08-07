@@ -49,7 +49,7 @@ class ProductsController extends Controller
                 ->orderBy('total', 'desc');
         }
 
-        $products = $request->input('all') == 1 ? $products->get() : $products->paginate(self::PAGINATE_PER_PAGE);
+        $products = $request->input('all') == 1 ? $products->latest()->get() : $products->latest()->paginate(self::PAGINATE_PER_PAGE);
 
         return ProductCollection::make($products);
     }

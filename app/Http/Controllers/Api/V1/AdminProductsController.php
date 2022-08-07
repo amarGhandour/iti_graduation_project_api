@@ -7,20 +7,25 @@ use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
 use App\Http\Traits\ApiResponse;
+use App\Http\Traits\ImageTrait;
 use App\Models\Product;
+use Illuminate\Support\Str;
 
 class AdminProductsController extends Controller
 {
 
-    use ApiResponse;
+    use ApiResponse, ImageTrait;
 
     public function store(ProductStoreRequest $request)
     {
         $this->authorize('create_product');
 
-        $product = Product::create(collect($request->validated())->except(['category_id'])->toArray());
+        $productImageName = $this->uploadImage($request, 'images/products');
 
-        $product->categories()->attach($request->input('category_id'));
+        $product = Product::create(collect($request->validated())->except(['categories', 'image'])->toArray()
+            + ['slug' => Str::slug($request->input('name')), 'image' => $productImageName]);
+
+        $product->categories()->attach($request->input('categories'));
 
         return $this->response(201, true, null, ProductResource::make($product->load('categories')), 'Product has been successfully added.');
     }
@@ -29,9 +34,12 @@ class AdminProductsController extends Controller
     {
         $this->authorize('edit_product');
 
-        $product->update(collect($request->validated())->except(['category_id'])->toArray());
+        $productImageName = $this->updateImage($request, $product?->image, 'images/products/');
 
-        $product->categories()->sync($request->input('category_id'));
+        $$product = $product->update(collect($request->validated())->except(['categories', 'image'])->toArray()
+            + ['slug' => Str::slug($request->input('name')), 'image' => $productImageName]);
+
+        $product->categories()->sync($request->input('categories'));
 
         return $this->response(201, true, null, ProductResource::make($product->load('categories')), 'Product has been successfully updated.');
 

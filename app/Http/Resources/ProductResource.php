@@ -21,6 +21,8 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             'price' => $this->price,
             'quantity' => $this->quantity,
+            'featured' => $this->featured == 1,
+            'image' => $this->whenAppended('imageUrl'),
             'rating' => $this->when($this->reviews_avg_rating != 0, round($this->reviews_avg_rating / 10, 2)),
             'reviews' => ReviewResource::collection($this->whenLoaded('reviews')),
             'categories' => CategoryResource::collection($this->whenLoaded('categories')),

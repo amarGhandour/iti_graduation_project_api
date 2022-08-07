@@ -26,14 +26,22 @@ class ProductUpdateRequest extends FormRequest
     {
         $product = $this->route('product');
         return [
-            'name' => ['required', Rule::unique('products', 'name')->ignore($product->id), 'min:6'],
-            'slug' => ['required', Rule::unique('products', 'slug')->ignore($product->id)],
+            'name' => ['required', Rule::unique('products', 'name')->ignore($product), 'min:6'],
             'description' => ['required'],
             'price' => ['required', 'numeric'],
-            'category_id' => ['required', Rule::exists('categories', 'id')],
-            'quantity' => ['sometimes', 'numeric'],
+            'categories' => ['required', Rule::exists('categories', 'id')],
+            'quantity' => ['required', 'numeric'],
             'image' => ['sometimes', 'image'],
-            'featured' => ['required'],
+            'featured' => ['required', 'boolean'],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if (is_string($this->featured)) {
+            $this->merge([
+                'featured' => $this->featured === 'false' ? false : ($this->featured === 'true' ? true : 'dummy'),
+            ]);
+        }
     }
 }

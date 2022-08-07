@@ -71,8 +71,9 @@ Route::get('colors', [ColorController::class, 'index']);
 
 
 // for testing only
-Route::post('/empty', function () {
-    \Gloudemans\Shoppingcart\Facades\Cart::instance('shopping')->destroy();
+Route::get('/empty', function () {
+//    \Gloudemans\Shoppingcart\Facades\Cart::instance('shopping')->destroy();
+    return asset('no_image.png');
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');

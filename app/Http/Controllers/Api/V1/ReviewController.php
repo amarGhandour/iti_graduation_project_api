@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Controller;
 use App\Http\Traits\ApiResponse;
 use App\Models\Product;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use function auth;
 
 class ReviewController extends Controller
 {

@@ -42,6 +42,8 @@ class Product extends Model
 
     protected $guarded = [];
 
+    protected $appends = ['imageUrl'];
+
     public function categories()
     {
         return $this->belongsToMany(Category::class)->withTimestamps();
@@ -60,6 +62,22 @@ class Product extends Model
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->attributes['image'] == null)
+            return asset('images/products/no_image.png');
+
+        return asset('images/products/' . $this->attributes['image']);
+    }
+
+    public function getImageAttribute()
+    {
+        if ($this->attributes['image'] == null)
+            return 'no_image.png';
+
+        return $this->attributes['image'];
     }
 
     public function getRelatedProductsAttribute()

@@ -26,13 +26,21 @@ class ProductStoreRequest extends FormRequest
     {
         return [
             'name' => ['required', Rule::unique('products', 'name'), 'min:6'],
-            'slug' => ['required', Rule::unique('products', 'slug')],
             'description' => ['required'],
             'price' => ['required', 'numeric'],
-            'category_id' => ['required', Rule::exists('categories', 'id')],
+            'categories' => ['required', Rule::exists('categories', 'id')],
             'quantity' => ['sometimes', 'numeric'],
             'image' => ['sometimes', 'image'],
             'featured' => ['required', 'boolean'],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if (is_string($this->featured)) {
+            $this->merge([
+                'featured' => $this->featured === 'false' ? false : ($this->featured === 'true' ? true : 'dummy'),
+            ]);
+        }
     }
 }

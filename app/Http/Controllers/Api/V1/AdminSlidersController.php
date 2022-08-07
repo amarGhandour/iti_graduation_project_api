@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SliderResource;
 use App\Http\Traits\ApiResponse;
+use App\Http\Traits\ImageTrait;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class AdminSlidersController extends Controller
 {
-    use ApiResponse;
+    use ApiResponse, ImageTrait;
 
     public function store(Request $request)
     {
@@ -21,12 +22,16 @@ class AdminSlidersController extends Controller
             'title' => ['required', Rule::unique('sliders', 'title')],
             'slug' => ['required', Rule::unique('sliders', 'slug')],
             'description' => ['required'],
-            'status' => ['required', 'boolean']
+            'status' => ['required', 'boolean'],
+            'image' => ['image', 'mimes:png'],
+            'route' => ['required']
         ]);
 
         // Todo admin can store slider image
 
-        $slider = Slider::create($attributes);
+        $sliderImage = $this->uploadImage($request, '/images/sliders');
+
+        $slider = Slider::create($request->only(['slug', 'title', 'status', 'description']) + ['image' => $sliderImage]);
 
         return $this->response(201, true, null, SliderResource::make($slider), 'New slider has been successfully created.');
     }

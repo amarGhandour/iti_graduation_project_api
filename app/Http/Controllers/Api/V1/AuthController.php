@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Resources\UserResource;
 use App\Http\Traits\ApiResponse;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -39,13 +40,14 @@ class AuthController extends Controller
         }
 
         $user = \Auth::user();
+        $user->load('roles');
 
         $jwt = $user->createToken('access_token')->plainTextToken;
 
         $cookie = cookie('access_token', $jwt, 60 * 24);
 
         return response()->json(['data' => [
-            'user' => $user,
+            'user' => UserResource::make($user),
             'accessToken' => $jwt
         ], 'errors' => [], 'success' => true])->withCookie($cookie);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace App\Http\Traits;
 
 use Illuminate\Http\Request;
 
@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
  */
 trait ImageTrait
 {
-    private $noImage = "no-image.png";
+    private $noImage = "no_image.png";
 
     public function setNoImage($name)
     {
