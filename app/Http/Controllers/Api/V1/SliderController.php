@@ -4,20 +4,15 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SliderCollection;
-use App\Http\Traits\ApiResponse;
 use App\Models\Slider;
-use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class SliderController extends Controller
 {
-    use ApiResponse;
 
-    const PAGINATE_PER_PAGE = 10;
-
-    public function index(Request $request)
+    public function index()
     {
-
-        $sliders = $request->input('all') == 1 ? Slider::all() : Slider::paginate(self::PAGINATE_PER_PAGE);
+        $sliders = Slider::where('status', true)->get();
 
         return SliderCollection::make($sliders);
     }

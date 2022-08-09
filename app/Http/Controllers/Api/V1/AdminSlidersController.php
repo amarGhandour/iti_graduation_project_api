@@ -3,54 +3,66 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SliderStoreRequest;
+use App\Http\Requests\SliderUpdateRequest;
+use App\Http\Resources\SliderCollection;
 use App\Http\Resources\SliderResource;
 use App\Http\Traits\ApiResponse;
 use App\Http\Traits\ImageTrait;
+use App\Models\Category;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class AdminSlidersController extends Controller
 {
     use ApiResponse, ImageTrait;
 
-    public function store(Request $request)
+
+    const PAGINATE_PER_PAGE = 10;
+
+    public function index(Request $request)
     {
-        $this->authorize('create_slider');
+//        if ($request->has('status'))
+//             $sliders = Slider::where('status', $request->input('status'));
+        $sliders = Slider::latest();
 
-        $attributes = $request->validate([
-            'title' => ['required', Rule::unique('sliders', 'title')],
-            'slug' => ['required', Rule::unique('sliders', 'slug')],
-            'description' => ['required'],
-            'status' => ['required', 'boolean'],
-            'image' => ['image', 'mimes:png'],
-            'route' => ['required']
-        ]);
+        $sliders = $request->input('all') == 1 ? $sliders->get() : $sliders->paginate(self::PAGINATE_PER_PAGE);
 
-        // Todo admin can store slider image
+        return SliderCollection::make($sliders);
+    }
 
+    public function show(Slider $slider)
+    {
+
+        return $this->response(200, true, null, SliderResource::make($slider));
+    }
+
+    public function store(SliderStoreRequest $request)
+    {
         $sliderImage = $this->uploadImage($request, '/images/sliders');
 
-        $slider = Slider::create($request->only(['slug', 'title', 'status', 'description']) + ['image' => $sliderImage]);
+        $category = Category::create([
+            'name' => $request->input('title'),
+            'slug' => Str::slug($request->input('title'))
+        ]);
+
+        $slider = $category->slider()->create($request->only(['title', 'status', 'description']) +
+            ['image' => $sliderImage, 'link' => 'products?category=' . $category->name]);
 
         return $this->response(201, true, null, SliderResource::make($slider), 'New slider has been successfully created.');
     }
 
 
-    public function update(Request $request, Slider $slider)
+    public function update(SliderUpdateRequest $request, Slider $slider)
     {
-        $this->authorize('edit_slider');
+        $sliderImage = $this->updateImage($request, $slider?->image, '/images/sliders/');
 
-        $attributes = $request->validate([
-            'title' => ['required', Rule::unique('sliders', 'title')->ignore($slider->id)],
-            'slug' => ['required', Rule::unique('sliders', 'slug')->ignore($slider->id)],
-            'description' => ['required'],
-            'status' => ['required', 'boolean']
-        ]);
+        $slider->update($request->only(['title', 'status', 'description']) +
+            ['image' => $sliderImage]);
 
-        // Todo admin can update slider image
-
-        $slider->update($attributes);
+        $slider->category()->update(['name' => $request->input('title')]);
 
         return $this->response(200, true, null, SliderResource::make($slider), 'Slider has been successfully updated.');
     }
@@ -58,11 +70,12 @@ class AdminSlidersController extends Controller
 
     public function destroy(Slider $slider)
     {
-        $this->authorize('delete_slider');
+        if ($slider?->image !== null)
+            $this->deleteImage($slider?->image, 'images/sliders/');
 
-        $slider->products()->detach();
+        $category = $slider->category;
 
-        $slider->delete();
+        $category->delete();
 
         return $this->response(204);
     }

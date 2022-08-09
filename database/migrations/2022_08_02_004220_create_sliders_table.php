@@ -15,8 +15,8 @@ return new class extends Migration {
         Schema::create('sliders', function (Blueprint $table) {
             $table->id();
             $table->string('title')->unique();
-            $table->string('slug')->unique();
-            $table->string('route')->unique();
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('link')->unique();
             $table->text('description');
             $table->string('image')->nullable();
             $table->boolean('status')->default(false);

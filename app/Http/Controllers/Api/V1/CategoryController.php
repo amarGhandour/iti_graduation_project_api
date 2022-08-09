@@ -15,7 +15,9 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
 
-        $categories = $request->input('all') == 1 ? Category::all() : Category::paginate(10);
+        $categories = Category::doesntHave('slider');
+
+        $categories = $request->input('all') == 1 ? $categories->get() : $categories->paginate(10);
 
         return CategoryCollection::make($categories);
     }

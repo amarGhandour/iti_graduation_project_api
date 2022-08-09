@@ -59,10 +59,7 @@ class PermissionsTableSeeder extends Seeder
             'order_delete',
             'review_access',
             'review_show',
-            'slider_create',
-            'slider_edit',
-            'slider_delete',
-            'slider_access',
+            'sliders_management',
             'coupons_management',
             'orders_management',
             'colors_management'

@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Slider>
@@ -20,7 +19,6 @@ class SliderFactory extends Factory
         $title = $this->faker->sentence();
         return [
             'title' => $title,
-            'slug' => Str::slug($this->faker->sentence()),
             'description' => $this->faker->paragraph,
             'image' => $this->faker->imageUrl(),
         ];

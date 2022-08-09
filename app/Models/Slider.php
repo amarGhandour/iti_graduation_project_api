@@ -11,8 +11,26 @@ class Slider extends Model
 
     protected $guarded = [];
 
-    public function products()
+    protected $appends = ['imageUrl'];
+
+    public function getImageUrlAttribute()
     {
-        return $this->belongsToMany(Product::class)->withTimestamps();
+        if ($this->attributes['image'] == null)
+            return asset('images/sliders/no_image.png');
+
+        return asset('images/sliders/' . $this->attributes['image']);
+    }
+
+    public function getImageAttribute()
+    {
+        if ($this->attributes['image'] == null)
+            return 'no_image.png';
+
+        return $this->attributes['image'];
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

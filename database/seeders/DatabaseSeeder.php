@@ -34,14 +34,16 @@ class DatabaseSeeder extends Seeder
             ]);
         });
 
-        $categories->each(function ($category) {
-            Slider::factory()->create([
-                'route' => "products?category=$category->name",
-            ]);
-        });
+
+        $slidesWithTrueStatus = Slider::factory()->create([
+            'link' => "products?category=" . $categories[1]->name,
+            'category_id' => $categories[1],
+            'status' => true
+        ]);
 
         $slidesWithFalseStatus = Slider::factory()->create([
-            'route' => "products?category=$categories[1]->name",
+            'link' => "products?category=" . $categories[2]->name,
+            'category_id' => $categories[2],
         ]);
 
         Coupon::insert([[
