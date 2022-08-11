@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
 class ResetPasswordController extends Controller
 {
+    use ApiResponse;
+
     public function __invoke(Request $request)
     {
         $attributes = $request->validate([
@@ -17,14 +20,14 @@ class ResetPasswordController extends Controller
         ]);
 
         $resetStatus = Password::reset($attributes, function ($user, $password) {
-            $user->password = $password;
+            $user->password = bcrypt($password);
             $user->save();
         });
 
         if ($resetStatus == Password::INVALID_TOKEN) {
-            return response()->json(['message' => 'invalid token'], 400);
+            return $this->response(400, false, ['token' => 'invalid token'], null, 'invalid token');
         }
 
-        return response()->json(['message' => 'Password successfully changed.'], 400);
+        return $this->response(201, true, null, null, 'Password successfully changed.');
     }
 }

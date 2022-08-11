@@ -41,8 +41,9 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 // password reset
 Route::post('/password/email', [ForgotPasswordController::class, '__invoke']);
 Route::post('/password/reset', [ResetPasswordController::class, '__invoke']);
-Route::get('password/reset', function () {
-    dd('here');
+Route::get('password/reset', function (Request $request) {
+    return response()->json(['success' => true, 'errors' => [],
+        'data' => ['token' => $request->input('token'), 'email' => $request->input('email')]]);
 })->name('password.reset');
 
 // Verify email
