@@ -13,7 +13,6 @@ use App\Models\Category;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 
 class AdminSlidersController extends Controller
 {
@@ -41,7 +40,7 @@ class AdminSlidersController extends Controller
 
     public function store(SliderStoreRequest $request)
     {
-        $sliderImage = $this->uploadImage($request, '/images/sliders');
+        $sliderImage = $this->uploadImage($request, '/images' . DIRECTORY_SEPARATOR . 'sliders');
 
         $category = Category::create([
             'name' => $request->input('title'),
@@ -57,7 +56,7 @@ class AdminSlidersController extends Controller
 
     public function update(SliderUpdateRequest $request, Slider $slider)
     {
-        $sliderImage = $this->updateImage($request, $slider?->image, '/images/sliders/');
+        $sliderImage = $this->updateImage($request, $slider?->image, '/images' . DIRECTORY_SEPARATOR . 'sliders' . DIRECTORY_SEPARATOR);
 
         $slider->update($request->only(['title', 'status', 'description']) +
             ['image' => $sliderImage]);
@@ -71,7 +70,7 @@ class AdminSlidersController extends Controller
     public function destroy(Slider $slider)
     {
         if ($slider?->image !== null)
-            $this->deleteImage($slider?->image, 'images/sliders/');
+            $this->deleteImage($slider?->image, 'images' . DIRECTORY_SEPARATOR . 'sliders' . DIRECTORY_SEPARATOR);
 
         $category = $slider->category;
 

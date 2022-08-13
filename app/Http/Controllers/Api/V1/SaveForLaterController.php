@@ -14,7 +14,6 @@ class SaveForLaterController extends Controller
 
     public function index()
     {
-
         if (Cart::instance('saveForLater')->count() == 0)
             return $this->response(200, true, null, null, 'There is no items currently saved for later!');
 
