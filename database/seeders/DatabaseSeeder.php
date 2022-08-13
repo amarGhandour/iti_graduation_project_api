@@ -26,8 +26,8 @@ class DatabaseSeeder extends Seeder
 
         $colors = Color::factory()->count(5)->create();
 
-        $products = Product::factory()->count(50)->create()->each(function ($product) use ($categories, $colors) {
-            $product->categories()->attach($categories->random(2));
+        $products = Product::factory()->count(50)->create(['image' => null])->each(function ($product) use ($categories, $colors) {
+            $product->categories()->attach($categories->random(1));
             $product->colors()->attach($colors->random(3));
             Review::factory()->count(10)->create([
                 'product_id' => $product

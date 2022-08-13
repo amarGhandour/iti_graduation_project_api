@@ -20,7 +20,7 @@ class AdminProductsController extends Controller
     {
         $this->authorize('create_product');
 
-        $productImageName = $this->uploadImage($request, 'images/products');
+        $productImageName = $this->uploadImage($request, 'images' . DIRECTORY_SEPARATOR . 'products');
 
         $product = Product::create(collect($request->validated())->except(['categories', 'image'])->toArray()
             + ['slug' => Str::slug($request->input('name')), 'image' => $productImageName]);
@@ -34,7 +34,7 @@ class AdminProductsController extends Controller
     {
         $this->authorize('edit_product');
 
-        $productImageName = $this->updateImage($request, $product?->image, 'images/products/');
+        $productImageName = $this->updateImage($request, $product?->image, 'images' . DIRECTORY_SEPARATOR . 'products' . DIRECTORY_SEPARATOR);
 
         $$product = $product->update(collect($request->validated())->except(['categories', 'image'])->toArray()
             + ['slug' => Str::slug($request->input('name')), 'image' => $productImageName]);
@@ -48,6 +48,9 @@ class AdminProductsController extends Controller
     public function destroy(Product $product)
     {
         $this->authorize('delete_product');
+
+        if ($product?->image !== null)
+            $this->deleteImage($product?->image, 'images' . DIRECTORY_SEPARATOR . 'products' . DIRECTORY_SEPARATOR);
 
         $product->categories()->detach();
         $product->delete();

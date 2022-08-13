@@ -20,7 +20,6 @@ class SliderFactory extends Factory
         return [
             'title' => $title,
             'description' => $this->faker->paragraph,
-            'image' => $this->faker->imageUrl(),
         ];
     }
 }

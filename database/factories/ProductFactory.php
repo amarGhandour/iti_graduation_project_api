@@ -22,7 +22,6 @@ class ProductFactory extends Factory
             'name' => $name,
             'slug' => Str::slug($name),
             'description' => $this->faker->paragraph,
-            'image' => $this->faker->imageUrl(300, 300),
             'price' => $this->faker->numberBetween(10000, 200000),
         ];
     }

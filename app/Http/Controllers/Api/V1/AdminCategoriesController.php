@@ -5,26 +5,29 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
 use App\Http\Traits\ApiResponse;
+use App\Http\Traits\ImageTrait;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class AdminCategoriesController extends Controller
 {
-    use ApiResponse;
+    use ApiResponse, ImageTrait;
 
     public function store(Request $request)
     {
         $this->authorize('create_category');
 
-        $attributes = $request->validate([
+        $request->validate([
             'name' => ['required', Rule::unique('categories', 'name')],
-            'slug' => ['required', Rule::unique('categories', 'slug')]
+            'image' => ['image']
         ]);
 
-        // Todo admin can store category image
+        $categoryImageName = $this->uploadImage($request, 'images' . DIRECTORY_SEPARATOR . 'categories');
 
-        $category = Category::create($attributes);
+        $category = Category::create($request->only(['name']) +
+            ['slug' => Str::slug($request->input('name')), 'image' => $categoryImageName]);
 
         return $this->response(201, true, null, CategoryResource::make($category), 'New category has been successfully created.');
     }
@@ -36,12 +39,13 @@ class AdminCategoriesController extends Controller
 
         $attributes = $request->validate([
             'name' => ['required', Rule::unique('categories', 'name')->ignore($category->id)],
-            'slug' => ['required', Rule::unique('categories', 'slug')->ignore($category->id)]
+            'image' => ['image']
         ]);
 
-        // Todo admin can update category image
+        $categoryImageName = $this->updateImage($request, $category?->image, 'images' . DIRECTORY_SEPARATOR . 'categories' . DIRECTORY_SEPARATOR);
 
-        $category->update($attributes);
+        $category->update($request->only(['name', 'slug']) +
+            ['slug' => Str::slug($request->input('name')), 'image' => $categoryImageName]);
 
         return $this->response(200, true, null, CategoryResource::make($category), 'Category has been successfully updated.');
     }
@@ -50,6 +54,9 @@ class AdminCategoriesController extends Controller
     public function destroy(Category $category)
     {
         $this->authorize('delete_category');
+
+        if ($category?->image !== null)
+            $this->deleteImage($category?->image, 'images' . DIRECTORY_SEPARATOR . 'categories' . DIRECTORY_SEPARATOR);
 
         $category->products()->detach();
 

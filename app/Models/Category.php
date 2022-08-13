@@ -32,6 +32,8 @@ class Category extends Model
 
     protected $guarded = [];
 
+    protected $appends = ['imageUrl'];
+
     public function products()
     {
         return $this->belongsToMany(Product::class);
@@ -40,5 +42,21 @@ class Category extends Model
     public function slider()
     {
         return $this->hasOne(Slider::class);
+    }
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->attributes['image'] == null)
+            return asset('images' . DIRECTORY_SEPARATOR . 'categories' . DIRECTORY_SEPARATOR . 'no_image.png');
+
+        return asset('images' . DIRECTORY_SEPARATOR . 'categories' . DIRECTORY_SEPARATOR . $this->attributes['image']);
+    }
+
+    public function getImageAttribute()
+    {
+        if ($this->attributes['image'] == null)
+            return 'no_image.png';
+
+        return $this->attributes['image'];
     }
 }
