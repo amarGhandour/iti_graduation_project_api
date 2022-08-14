@@ -5,12 +5,14 @@ use App\Http\Controllers\Api\V1\AdminColorsController;
 use App\Http\Controllers\Api\V1\AdminCouponsController;
 use App\Http\Controllers\Api\V1\AdminOrderStatusController;
 use App\Http\Controllers\Api\V1\AdminProductsController;
+use App\Http\Controllers\Api\V1\AdminRolesController;
 use App\Http\Controllers\Api\V1\AdminSlidersController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CartController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\CheckoutController;
 use App\Http\Controllers\Api\V1\ColorController;
+use App\Http\Controllers\Api\V1\ContactUsController;
 use App\Http\Controllers\Api\V1\CouponController;
 use App\Http\Controllers\Api\V1\ForgotPasswordController;
 use App\Http\Controllers\Api\V1\OrderController;
@@ -70,6 +72,8 @@ Route::get('sliders', [SliderController::class, 'index']);
 // colors
 Route::get('colors', [ColorController::class, 'index']);
 
+// contucs us
+Route::post('contact-us', [ContactUsController::class, 'store']);
 
 // for testing only
 Route::get('/empty', function () {
@@ -132,6 +136,9 @@ Route::prefix('admin')->group(function () {
         Route::middleware('can:colors_management')->apiResource('/colors', AdminColorsController::class)->except('show', 'index');
 
         Route::middleware('can:orders_management')->patch('orders/{order}', [AdminOrderStatusController::class, 'update']);
+
+        Route::apiResource('roles', AdminRolesController::class);
+
     });
 
 });
