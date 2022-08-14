@@ -23,7 +23,7 @@ class ProductsController extends Controller
 
         if ($request->has('category')) {
             $products->whereHas('categories', function ($query) use ($request) {
-                $query->where('slug', $request->input('category'));
+                $query->where('name', $request->input('category'));
             });
         }
 
@@ -36,6 +36,10 @@ class ProductsController extends Controller
             $products->whereHas('colors', function ($query) use ($request) {
                 $query->where('name', $request->input('color'));
             });
+        }
+
+        if ($request->has('search')) {
+            $products->where('name', 'like', '%' . $request->input('search') . '%');
         }
 
         if ($request->has('rating')) {

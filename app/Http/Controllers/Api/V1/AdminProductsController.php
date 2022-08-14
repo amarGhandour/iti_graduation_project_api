@@ -13,7 +13,6 @@ use Illuminate\Support\Str;
 
 class AdminProductsController extends Controller
 {
-
     use ApiResponse, ImageTrait;
 
     public function store(ProductStoreRequest $request)
