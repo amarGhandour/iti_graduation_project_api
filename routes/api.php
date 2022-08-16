@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\AdminOrderStatusController;
 use App\Http\Controllers\Api\V1\AdminProductsController;
 use App\Http\Controllers\Api\V1\AdminRolesController;
 use App\Http\Controllers\Api\V1\AdminSlidersController;
+use App\Http\Controllers\Api\V1\AdminUsersController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CartController;
 use App\Http\Controllers\Api\V1\CategoryController;
@@ -138,6 +139,8 @@ Route::prefix('admin')->group(function () {
         Route::middleware('can:orders_management')->patch('orders/{order}', [AdminOrderStatusController::class, 'update']);
 
         Route::apiResource('roles', AdminRolesController::class);
+
+        Route::apiResource('users', AdminUsersController::class)->except('destroy');
 
     });
 
