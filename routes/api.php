@@ -127,7 +127,7 @@ Route::prefix('admin')->group(function () {
 
         Route::apiResource('/products', AdminProductsController::class)->except('index', 'show');
 
-        Route::apiResource('/categories', AdminCategoriesController::class)->except('index', 'show');
+        Route::apiResource('/categories', AdminCategoriesController::class)->except('index');
 
         Route::middleware('can:sliders_management')->apiResource('/sliders', AdminSlidersController::class);
 
