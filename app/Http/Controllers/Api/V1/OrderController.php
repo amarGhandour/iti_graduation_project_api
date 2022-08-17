@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,7 @@ class OrderController extends Controller
     {
         $orders = auth()->user()->orders()->with('user')->get();
 
-        return OrderResource::collection($orders);
+        return OrderCollection::make($orders);
     }
 
     public function show(Order $order)

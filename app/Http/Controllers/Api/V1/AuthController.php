@@ -64,14 +64,14 @@ class AuthController extends Controller
     public function updateInfo(Request $request)
     {
         $attributes = $request->validate([
-            'email' => ['email', Rule::unique('users', 'email')->ignore($request->user(), 'email')],
-            'name' => ['string'],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($request->user(), 'email')],
+            'name' => ['required', 'string', 'min:5', 'max:20'],
         ]);
 
         $user = auth()->user();
         $user->update($attributes);
 
-        return $this->response(Response::HTTP_ACCEPTED, true, null, $user);
+        return $this->response(Response::HTTP_ACCEPTED, true, null, $user, 'Profile successfully updated.');
     }
 
     public function updatePassword(Request $request)
@@ -84,6 +84,6 @@ class AuthController extends Controller
         $user = auth()->user();
         $user->update(['password' => Hash::make($request->input('password'))]);
 
-        return $this->response(Response::HTTP_ACCEPTED, true, null, $user);
+        return $this->response(Response::HTTP_ACCEPTED, true, null, $user, 'Password successfully updated.');
     }
 }
