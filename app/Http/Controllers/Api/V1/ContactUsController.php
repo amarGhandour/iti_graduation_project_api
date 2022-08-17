@@ -14,15 +14,22 @@ class ContactUsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email',
-            'subject' => 'required',
-            'message' => 'required'
+            'name' => ['required'],
+            'email' => ['required,email'],
+            'subject' => ['required'],
+            'message' => ['required']
         ]);
 
-
-        // todo sent email to admin.
-
+        \Mail::send('contact_us',
+            array(
+                'name' => $request->get('name'),
+                'email' => $request->get('email'),
+                'subject' => $request->get('subject'),
+                'user_message' => $request->get('message'),
+            ), function ($message) use ($request) {
+                $message->from($request->email);
+                $message->to('amarghandour89@gmail.com');
+            });
 
         return $this->response(200, true, null, null, 'Email successfully sent');
     }
