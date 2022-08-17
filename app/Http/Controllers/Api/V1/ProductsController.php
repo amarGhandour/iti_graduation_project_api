@@ -18,10 +18,6 @@ class ProductsController extends Controller
 
     public function index(Request $request)
     {
-
-////        dd($request->input('category', []));
-//        dd(is_array($request->input('category')));
-
         $products = Product::with('categories')->withAvg('reviews', 'rating');
 
         if ($request->has('category')) {
@@ -66,6 +62,8 @@ class ProductsController extends Controller
 
     public function show(Product $product)
     {
+        session()->push('products.recently_viewed', $product->getKey());
+
         $product->load('categories', 'reviews.user')->loadAvg('reviews', 'rating');
 
         $product->append('related_products');

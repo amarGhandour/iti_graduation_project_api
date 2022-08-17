@@ -23,6 +23,7 @@ use App\Http\Controllers\Api\V1\ReviewController;
 use App\Http\Controllers\Api\V1\SaveForLaterController;
 use App\Http\Controllers\Api\V1\SliderController;
 use App\Http\Controllers\Api\V1\VerifyEmailController;
+use App\Http\Controllers\RecentlyViewedController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -62,6 +63,7 @@ Route::post('/email/verify/resend', function (Request $request) {
 
 // products
 Route::get('/products', [ProductsController::class, 'index']);
+Route::get('/products/recently-viewed', [RecentlyViewedController::class, '__invoke']);
 Route::get('/products/{product}', [ProductsController::class, 'show']);
 
 // categories
