@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('type');
             $table->integer('value')->nullable();
             $table->integer('percent_off')->nullable();
+            $table->dateTime('valid_date')->default(now()->addDay());
             $table->timestamps();
         });
     }

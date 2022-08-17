@@ -7,6 +7,7 @@ use App\Http\Traits\ApiResponse;
 use App\Models\Coupon;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class CouponController extends Controller
 {
@@ -14,15 +15,19 @@ class CouponController extends Controller
 
     public function store(Request $request)
     {
-
         $attributes = $request->validate([
             'couponCode' => ['required', 'alpha_num', 'size:6']
         ]);
 
         $coupon = Coupon::where('code', $attributes['couponCode'])->first();
 
-        if (!$coupon) {
-            return $this->response(404, false, ['code' => 'invalid coupon code.'], null, 'failed coupon code');
+        if ($coupon) {
+            $date = Carbon::createFromFormat('Y-m-d H:i:s', $coupon?->valid_date, 'Africa/Cairo');
+            $isValid = $date->gt(now('GMT+2'));
+        }
+
+        if (!$coupon || !$isValid) {
+            return $this->response(404, false, ['code' => 'invalid coupon code.'], null, 'invalid coupon code');
         }
 
         session()->put('coupon', [
@@ -38,7 +43,6 @@ class CouponController extends Controller
 
     public function destroy()
     {
-
         if (!session()->has('coupon'))
             return $this->response(404, false, null, null, 'There is no applied coupon.');
 

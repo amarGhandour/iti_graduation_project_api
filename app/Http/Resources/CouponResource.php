@@ -19,7 +19,8 @@ class CouponResource extends JsonResource
             'code' => $this->code,
             'type' => $this->type,
             'value' => $this->whenNotNull($this->value),
-            'percent_off' => $this->whenNotNull($this->percent_off)
+            'percent_off' => $this->whenNotNull($this->percent_off),
+            'valid_date' => $this->valid_date
         ];
     }
 }

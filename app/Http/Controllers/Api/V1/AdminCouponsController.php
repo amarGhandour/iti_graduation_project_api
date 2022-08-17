@@ -19,13 +19,24 @@ class AdminCouponsController extends Controller
 
     public function index()
     {
+        $this->authorize('coupon_access');
+
         $coupons = Coupon::paginate(self::PAGINATE_PER_PAGE);
 
         return CouponCollection::make($coupons);
     }
 
+    public function show(Coupon $coupon)
+    {
+        $this->authorize('coupon_show');
+
+        return $this->response(200, true, null, CouponResource::make($coupon));
+    }
+
     public function store(Request $request)
     {
+        $this->authorize('coupon_create');
+
         $attributes = $request->validate([
             'code' => ['required', 'size:6', Rule::unique('coupons', 'code')],
             'type' => ['required', Rule::in('fixed', 'percent')],
@@ -34,7 +45,8 @@ class AdminCouponsController extends Controller
             }), 'numeric'],
             'percent_off' => [Rule::requiredIf(function () use ($request) {
                 return $request->input('type') == 'percent';
-            })]
+            })],
+            'valid_date' => ['required', 'date_format:Y-m-d H:i:s']
         ]);
 
         $coupon = Coupon::create($attributes);
@@ -45,6 +57,8 @@ class AdminCouponsController extends Controller
 
     public function update(Request $request, Coupon $coupon)
     {
+        $this->authorize('coupon_access');
+
         $attributes = $request->validate([
             'code' => ['required', 'size:6', Rule::unique('coupons', 'code')->ignore($coupon->id)],
             'type' => ['required', Rule::in('fixed', 'percent')],
@@ -53,7 +67,8 @@ class AdminCouponsController extends Controller
             }), 'numeric'],
             'percent_off' => [Rule::requiredIf(function () use ($request) {
                 return $request->input('type') == 'percent';
-            })]
+            })],
+            'valid_date' => ['required', 'date_format:Y-m-d H:i:s']
         ]);
 
         $coupon->update($attributes);
@@ -64,6 +79,8 @@ class AdminCouponsController extends Controller
 
     public function destroy(Coupon $coupon)
     {
+        $this->authorize('coupon_delete');
+
         $coupon->delete();
 
         return $this->response(Response::HTTP_NO_CONTENT);

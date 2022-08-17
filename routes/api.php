@@ -132,7 +132,7 @@ Route::prefix('admin')->group(function () {
 
         Route::middleware('can:sliders_management')->apiResource('/sliders', AdminSlidersController::class);
 
-        Route::middleware('can:coupons_management')->apiResource('/coupons', AdminCouponsController::class)->except('show');
+        Route::apiResource('/coupons', AdminCouponsController::class);
 
         Route::middleware('can:colors_management')->apiResource('/colors', AdminColorsController::class)->except('show', 'index');
 
