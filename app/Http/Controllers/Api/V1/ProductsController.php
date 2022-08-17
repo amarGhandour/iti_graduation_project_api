@@ -19,11 +19,17 @@ class ProductsController extends Controller
     public function index(Request $request)
     {
 
+////        dd($request->input('category', []));
+//        dd(is_array($request->input('category')));
+
         $products = Product::with('categories')->withAvg('reviews', 'rating');
 
         if ($request->has('category')) {
             $products->whereHas('categories', function ($query) use ($request) {
-                $query->where('name', $request->input('category'));
+                if (is_array($request->input('category')))
+                    $query->whereIn('name', $request->input('category'));
+                else
+                    $query->where('name', $request->input('category'));
             });
         }
 
