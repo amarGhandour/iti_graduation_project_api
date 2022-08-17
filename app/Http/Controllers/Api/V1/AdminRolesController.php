@@ -26,6 +26,8 @@ class AdminRolesController extends Controller
     {
         $this->authorize('role_show');
 
+        $role->load('permissions');
+
         return $this->response(200, true, null, RoleResource::make($role));
     }
 
@@ -52,10 +54,14 @@ class AdminRolesController extends Controller
     {
         $this->authorize('role_edit');
 
+        if ($role->name == 'Super Admin' || $role->name == 'User')
+            return $this->response(403, true, 'Forbidden', null, 'You cannot edit this role.');
+
         $request->validate([
             'name' => 'required',
             'permissions' => ['required', Rule::exists('permissions', 'id')]
         ]);
+
 
         $role->update([
             'name' => $request->input('name'),
