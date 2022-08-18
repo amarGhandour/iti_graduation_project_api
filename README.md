@@ -35,7 +35,6 @@
 3. install dependencies with composer ``` composer install```
 4. run ```  php artisan migrate --seed```
 5. run ```php artisan key:generate```, then ``` php artisan serve ```
-6. import the database in POSTMAN and begin your work
 
 ## Documenetation & Demo
 
