@@ -15,7 +15,8 @@ class ColorResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name' => $this->name
+            'code' => $this->code,
+            'image' => $this->whenAppended('imageUrlPivot')
         ];
     }
 }

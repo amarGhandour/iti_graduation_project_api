@@ -64,7 +64,7 @@ class ProductsController extends Controller
     {
         session()->push('products.recently_viewed', $product->getKey());
 
-        $product->load('categories', 'reviews.user')->loadAvg('reviews', 'rating');
+        $product->load('categories', 'reviews.user', 'colors')->loadAvg('reviews', 'rating');
 
         $product->append('related_products');
 

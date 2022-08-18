@@ -32,6 +32,7 @@ class ProductStoreRequest extends FormRequest
             'quantity' => ['sometimes', 'numeric'],
             'image' => ['sometimes', 'image'],
             'featured' => ['required', 'boolean'],
+            'colors' => ['required']
         ];
     }
 

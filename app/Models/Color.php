@@ -11,8 +11,19 @@ class Color extends Model
 
     protected $guarded = [];
 
+    protected $appends = ['imageUrlPivot'];
+
     public function products()
     {
         $this->belongsToMany(Product::class)->withTimestamps();
     }
+
+    public function getImageUrlPivotAttribute()
+    {
+        if ($this->pivot->image == null)
+            return asset('images/colors/no_image.png');
+
+        return asset('images/colors/' . $this->pivot->image);
+    }
+
 }

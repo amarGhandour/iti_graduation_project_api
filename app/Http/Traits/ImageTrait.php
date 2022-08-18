@@ -16,7 +16,7 @@ trait ImageTrait
         $this->noImage = $name;
     }
 
-    public function updateImage(Request $request, $old_image, $path, $key = "image")
+    public function updateImage(Request $request, $old_image, $path, $imageFile = null, $key = "image")
     {
 
         $imageFileName = "";
@@ -32,10 +32,14 @@ trait ImageTrait
         return $imageFileName;
     }
 
-    public function uploadImage(Request $request, $path, $key = "image")
+    public function uploadImage(Request $request, $path, $imageFile = null, $key = "image")
     {
         $imageFileName = "";
-        if ($request->hasFile($key)) {
+
+        if (isset($imageFile)) {
+            $imageFileName = time() . "." . $imageFile->getClientOriginalExtension();
+            $imageFile->move(public_path($path), $imageFileName);
+        } else if ($request->hasFile($key)) {
             $image = $request->image;
             $imageFileName = time() . "." . $image->getClientOriginalExtension();
             $image->move(public_path($path), $imageFileName);

@@ -17,7 +17,7 @@ class ColorFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->colorName(),
+            'code' => $this->faker->hexColor(),
         ];
     }
 }

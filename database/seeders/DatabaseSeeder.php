@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
 
         $categories = Category::factory()->count(5)->create();
 
-        $colors = Color::factory()->count(5)->create();
+        $colors = Color::factory()->count(10)->create();
 
         $products = Product::factory()->count(50)->create(['image' => null])->each(function ($product) use ($categories, $colors) {
             $product->categories()->attach($categories->random(1));
@@ -33,7 +33,6 @@ class DatabaseSeeder extends Seeder
                 'product_id' => $product
             ]);
         });
-
 
         $slidesWithTrueStatus = Slider::factory()->create([
             'link' => "products?category=" . $categories[1]->name,

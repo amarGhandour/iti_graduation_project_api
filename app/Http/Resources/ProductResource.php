@@ -26,7 +26,7 @@ class ProductResource extends JsonResource
             'rating' => $this->when($this->reviews_avg_rating != 0, round($this->reviews_avg_rating / 10, 2)),
             'reviews' => ReviewResource::collection($this->whenLoaded('reviews')),
             'categories' => CategoryResource::collection($this->whenLoaded('categories')),
-            'colors' => $this->whenLoaded('colors'),
+            'colors' => ColorResource::collection($this->whenLoaded('colors')),
             'relatedProducts' => ProductResource::collection($this->whenAppended('related_products'))
         ];
     }
