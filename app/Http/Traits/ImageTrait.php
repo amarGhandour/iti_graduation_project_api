@@ -23,11 +23,11 @@ trait ImageTrait
         if (!$request->hasFile($key)) {
             $imageFileName = $old_image;
         } elseif ($old_image == $this->noImage) {
-            $imageFileName = $this->uploadImage($request, $path, $key);
+            $imageFileName = $this->uploadImage($request, $path, null, $key);
         } else {
             $deleted = $this->deleteImage($old_image, $path);
             if ($deleted)
-                $imageFileName = $this->uploadImage($request, $path, $key);
+                $imageFileName = $this->uploadImage($request, $path, null, $key);
         }
         return $imageFileName;
     }

@@ -13,9 +13,9 @@ class ContactUsController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'name' => ['required'],
-            'email' => ['required,email'],
+            'email' => ['required', 'email'],
             'subject' => ['required'],
             'message' => ['required']
         ]);
