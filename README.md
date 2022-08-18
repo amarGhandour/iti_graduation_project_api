@@ -37,4 +37,6 @@
 5. run ```php artisan key:generate```, then ``` php artisan serve ```
 6. import the database in POSTMAN and begin your work
 
+## Documenetation & Demo
 
+Extensive documentation with examples [here](https://documenter.getpostman.com/view/19363289/VUjMo5rT)
