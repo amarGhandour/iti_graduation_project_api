@@ -84,6 +84,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $guard_name = 'api';
 
+    protected $appends = ['imageUrl'];
+
+
     public function orders()
     {
         return $this->hasMany(Order::class);
@@ -92,5 +95,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->attributes['avatar'] == null)
+            return asset('images/users/no_image.png');
+
+        return asset('images/users/' . $this->attributes['avatar']);
+    }
+
+    public function getImageAttribute()
+    {
+        if ($this->attributes['avatar'] == null)
+            return 'no_image.png';
+
+        return $this->attributes['avatar'];
     }
 }

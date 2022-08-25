@@ -18,7 +18,8 @@ class UsersTableSeeder extends Seeder
         $admin = User::create([
             'name' => 'admin',
             'email' => 'admin@admin.com',
-            'password' => Hash::make('password')
+            'password' => Hash::make('password'),
+            'email_verified_at' => '2022-08-18 14:17:02'
         ]);
 
         $admin->assignRole('Super Admin');
@@ -26,7 +27,8 @@ class UsersTableSeeder extends Seeder
         $user = User::create([
             'name' => 'user',
             'email' => 'user@user.com',
-            'password' => Hash::make('password')
+            'password' => Hash::make('password'),
+            'email_verified_at' => '2022-08-18 14:17:02'
         ]);
 
         $user->assignRole('User');
