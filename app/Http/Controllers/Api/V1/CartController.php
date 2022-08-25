@@ -19,17 +19,26 @@ class CartController extends Controller
         if (Cart::instance('shopping')->count() == 0)
             return $this->response(200, true, null, null, 'There is no items in the cart.');
 
-        $items = Cart::instance('shopping')->content();
+//        $items = Cart::instance('shopping')->content();
+
+        $items = [];
+        foreach (Cart::instance('shopping')->content() as $item) {
+            $items[] = $item;
+        }
+
+        $productsIds = Cart::instance('shopping')->content()->pluck('id');
+        $products = Product::find($productsIds);
 
         $cart = collect([
             'items' => $items,
+            'products' => $products,
             'discount' => getNumbers()->get('discount'),
             'newSubtotal' => getNumbers()->get('newSubtotal'),
             'newTax' => getNumbers()->get('newTax'),
             'newTotal' => getNumbers()->get('newTotal'),
         ]);
 
-        return $this->response(200, true, null, $cart);
+        return $this->response(200, true, null, $cart->all());
     }
 
     public function store(Request $request)
@@ -47,6 +56,8 @@ class CartController extends Controller
 
         $newItem = Cart::instance('shopping')->add($product->id, $product->name, 1, $product->price)
             ->associate(Product::class);
+
+//        Cart::instance('shopping')->store(auth()->user()->name);
 
         return $this->response(201, true, null, $newItem, 'New Item added to your Cart.');
     }
