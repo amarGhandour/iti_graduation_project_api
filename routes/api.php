@@ -101,6 +101,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/cart', [CartController::class, 'store']);
     Route::patch('/cart/{rowId}', [CartController::class, 'update']);
     Route::delete('/cart/{rowId}', [CartController::class, 'destroy']);
+    Route::delete('/cart', [CartController::class, 'destroyAll']);
+
     Route::post('/cart/{rowId}/switchToSaveForLater', [CartController::class, 'switchToSaveForLater']);
 
     // save for later

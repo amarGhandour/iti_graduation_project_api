@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Resources\ProductResource;
 use App\Http\Traits\ApiResponse;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -29,9 +30,14 @@ class CartController extends Controller
         $productsIds = Cart::instance('shopping')->content()->pluck('id');
         $products = Product::find($productsIds);
 
+        $productsMap = [];
+        foreach ($products as $product) {
+            $productsMap[$product->id] = ProductResource::make($product);
+        }
+
         $cart = collect([
             'items' => $items,
-            'products' => $products,
+            'products' => $productsMap,
             'discount' => getNumbers()->get('discount'),
             'newSubtotal' => getNumbers()->get('newSubtotal'),
             'newTax' => getNumbers()->get('newTax'),
@@ -83,7 +89,14 @@ class CartController extends Controller
             return $this->response(404, false, null, null, 'Item not found');
         }
 
-        return $this->response(Response::HTTP_NO_CONTENT, true, null);
+        return $this->response(Response::HTTP_NO_CONTENT);
+    }
+
+    public function destroyAll()
+    {
+        Cart::instance('shopping')->destroy();
+
+        return $this->response(Response::HTTP_NO_CONTENT);
     }
 
     public function switchToSaveForLater($rowId)
