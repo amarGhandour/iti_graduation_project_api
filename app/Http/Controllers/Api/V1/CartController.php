@@ -32,7 +32,7 @@ class CartController extends Controller
 
         $productsMap = [];
         foreach ($products as $product) {
-            $productsMap[$product->id] = ProductResource::make($product);
+            $productsMap[$product->id] = ProductResource::make($product->load('categories'));
         }
 
         $cart = collect([
