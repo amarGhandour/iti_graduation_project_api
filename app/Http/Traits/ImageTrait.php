@@ -40,7 +40,7 @@ trait ImageTrait
             $imageFileName = time() . "." . $imageFile->getClientOriginalExtension();
             $imageFile->move(public_path($path), $imageFileName);
         } else if ($request->hasFile($key)) {
-            $image = $request->image;
+            $image = $request->$key;
             $imageFileName = time() . "." . $image->getClientOriginalExtension();
             $image->move(public_path($path), $imageFileName);
         } else {
