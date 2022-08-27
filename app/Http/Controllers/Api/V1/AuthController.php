@@ -67,27 +67,37 @@ class AuthController extends Controller
         $attributes = $request->validate([
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($request->user(), 'email')],
             'name' => ['required', 'string', 'min:5', 'max:20'],
-            'avatar' => ['image']
+            'avatar' => ['image'],
+            'country' => ['required'],
+            'city' => ['required'],
+            'address' => ['required'],
+            'postal_code' => ['required']
         ]);
 
         $user = auth()->user();
 
-//        $avatar = $this->updateImage($request, $user?->image, 'images' . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR, null, 'avatar');
+        $avatar = $this->updateImage($request, $user?->image, 'images' . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR, null, 'avatar');
 
+        $user->update($request->except(['avatar']) + ['avatar' => $avatar]);
 
-        $user->update($request->only(['name', 'email']));
-
-        return $this->response(Response::HTTP_ACCEPTED, true, null, UserResource::make($user), 'Profile successfully updated.');
+        return $this->response(Response::HTTP_ACCEPTED, true, null, UserResource::make(\Auth::user()), 'Profile successfully updated.');
     }
 
     public function updatePassword(Request $request)
     {
         $request->validate([
+            'old_password' => ['required'],
             'password' => ['required'],
             'password_confirm' => ['required', 'same:password']
         ]);
 
         $user = auth()->user();
+
+        if (!Hash::check($request->input('old_password'), $user->password)) {
+            return $this->response(422, true, ['old_password' => 'incorrect old password'], null, 'Incorrect Old Password');
+        };
+
+
         $user->update(['password' => Hash::make($request->input('password'))]);
 
         return $this->response(Response::HTTP_ACCEPTED, true, null, UserResource::make($user), 'Password successfully updated.');
