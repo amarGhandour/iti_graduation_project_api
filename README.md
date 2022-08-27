@@ -35,7 +35,7 @@
 3. install dependencies with composer ``` composer install```
 4. run ```  php artisan migrate --seed```
 5. run ```php artisan key:generate```, then ``` php artisan serve ```
-
+6. If you want to make stripe payment work, make sure add your stripe keys at your .env file.  
 ## Documenetation & Demo
 
 Extensive documentation with examples [here](https://documenter.getpostman.com/view/19363289/VUjMo5rT)
