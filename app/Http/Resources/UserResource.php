@@ -19,6 +19,11 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'avatar' => $this->whenAppended('imageUrl'),
+            'address' => $this->whenNotNull($this->address),
+            'city' => $this->whenNotNull($this->city),
+            'country' => $this->whenNotNull($this->country),
+            'postal_code' => $this->whenNotNull($this->postal_code),
+            'phone' => $this->whenNotNull($this->phone),
             'roles' => RoleResource::collection($this->whenLoaded('roles'))
         ];
     }

@@ -7,6 +7,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Traits\ApiResponse;
+use App\Http\Traits\ImageTrait;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
-    use ApiResponse;
+    use ApiResponse, ImageTrait;
 
     public function register(RegisterRequest $request)
     {
@@ -29,14 +30,14 @@ class AuthController extends Controller
 
         event(new Registered($user));
 
-        return $this->response(Response::HTTP_CREATED, true, null, $user);
+        return $this->response(Response::HTTP_CREATED, true, null, UserResource::make($user));
     }
 
     public function login(LoginRequest $request)
     {
         if (!\Auth::attempt($request->only(['email', 'password']))) {
 
-            return $this->response(Response::HTTP_UNAUTHORIZED, false, ['invalid credentials'], null, 'failed login');
+            return $this->response(Response::HTTP_UNAUTHORIZED, false, ['invalid credentials'], null, 'Invalid email or password.');
         }
 
         $user = \Auth::user();
@@ -66,12 +67,17 @@ class AuthController extends Controller
         $attributes = $request->validate([
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($request->user(), 'email')],
             'name' => ['required', 'string', 'min:5', 'max:20'],
+            'avatar' => ['image']
         ]);
 
         $user = auth()->user();
-        $user->update($attributes);
 
-        return $this->response(Response::HTTP_ACCEPTED, true, null, $user, 'Profile successfully updated.');
+//        $avatar = $this->updateImage($request, $user?->image, 'images' . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR, null, 'avatar');
+
+
+        $user->update($request->only(['name', 'email']));
+
+        return $this->response(Response::HTTP_ACCEPTED, true, null, UserResource::make($user), 'Profile successfully updated.');
     }
 
     public function updatePassword(Request $request)
@@ -84,6 +90,6 @@ class AuthController extends Controller
         $user = auth()->user();
         $user->update(['password' => Hash::make($request->input('password'))]);
 
-        return $this->response(Response::HTTP_ACCEPTED, true, null, $user, 'Password successfully updated.');
+        return $this->response(Response::HTTP_ACCEPTED, true, null, UserResource::make($user), 'Password successfully updated.');
     }
 }

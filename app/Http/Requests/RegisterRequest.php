@@ -28,7 +28,19 @@ class  RegisterRequest extends FormRequest
             'name' => ['required', 'string'],
             'email' => ['required', 'email', Rule::unique('users', 'email')],
             'password' => ['required', 'min:6'],
-            'password_confirm' => ['required', 'same:password']
+            'password_confirm' => ['required', 'same:password'],
+//            'phone' => [
+//                'required',
+//                Rule::unique('users', 'phone'),
+//                'numeric',
+//                'starts_with:010,011,012',
+//                'digits:11',
+//
+//            ],
+//            'country' => ['required'],
+//            'city' => ['required'],
+//            'postal_code' => ['required'],
+//            'address' => ['required']
         ];
     }
 }
