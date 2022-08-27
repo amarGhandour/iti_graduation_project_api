@@ -99,7 +99,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getImageUrlAttribute()
     {
-        if ($this->attributes['avatar'] == null)
+        if (!isset($this->attributes['avatar']))
             return asset('images/users/no_image.png');
 
         return asset('images/users/' . $this->attributes['avatar']);

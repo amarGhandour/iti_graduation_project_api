@@ -5,7 +5,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 function getNumbers()
 {
     $tax = config('cart.tax') / 100;
-    $discount = (session()->get('coupon')['discount']) ?? 0;
+    $discount = session()->get('coupon')['discount'] ?? 0;
     $code = session()->get('coupon')['name'] ?? null;
     $newSubtotal = (Cart::subtotal() - $discount);
     if ($newSubtotal < 0) {
@@ -16,7 +16,7 @@ function getNumbers()
 
     return collect([
         'tax' => $tax,
-        'discount' => round($discount / 100, 2),
+        'discount' => $discount,
         'code' => $code,
         'newSubtotal' => $newSubtotal,
         'newTax' => $newTax,
