@@ -14,7 +14,7 @@ class ProductsController extends Controller
 {
     use ApiResponse;
 
-    const PAGINATE_PER_PAGE = 10;
+    const PAGINATE_PER_PAGE = 8;
 
     public function index(Request $request)
     {
